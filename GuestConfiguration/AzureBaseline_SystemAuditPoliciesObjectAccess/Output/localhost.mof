@@ -1,0 +1,58 @@
+/*
+@TargetNode='localhost'
+@GeneratedBy=amirb
+@GenerationDate=07/09/2025 14:33:54
+@GenerationHost=AMIAI300
+*/
+
+instance of MSFT_ScriptResource as $MSFT_ScriptResource1ref
+{
+TestScript = "$AuditDetailedFileShare ='No Auditing'\n\n                $targetSetting = $AuditDetailedFileShare\n                try {\n                    $auditResult = & auditpol.exe /get /subcategory:\"Detailed File Share\" /r 2>$null\n                    if ($LASTEXITCODE -eq 0) {\n                        $csvData = $auditResult | ConvertFrom-Csv\n                        $currentSetting = ($csvData | Where-Object { $_.'Subcategory' -like \"*Detailed File Share*\" }).'Inclusion Setting'\n                        return ($currentSetting -eq $targetSetting)\n                    }\n                }\n                catch {\n                    return $false\n                }\n                return $false\n            ";
+ ModuleName = "PSDscResources";
+ SetScript = "$AuditDetailedFileShare ='No Auditing'\n\n                $targetSetting = $AuditDetailedFileShare\n                if ($targetSetting -eq 'Success and Failure') {\n                    & auditpol.exe /set /subcategory:\"Detailed File Share\" /success:enable /failure:enable\n                } elseif ($targetSetting -eq 'Success') {\n                    & auditpol.exe /set /subcategory:\"Detailed File Share\" /success:enable /failure:disable\n                } elseif ($targetSetting -eq 'Failure') {\n                    & auditpol.exe /set /subcategory:\"Detailed File Share\" /success:disable /failure:enable\n                } else {\n                    & auditpol.exe /set /subcategory:\"Detailed File Share\" /success:disable /failure:disable\n                }\n            ";
+ SourceInfo = "C:\\git\\AzureGuestConfigurationCIS\\GuestConfiguration\\AzureBaseline_SystemAuditPoliciesObjectAccess\\AzureBaseline_SystemAuditPoliciesObjectAccess.ps1::19::9::Script";
+ GetScript = "\n                try {\n                    $auditResult = & auditpol.exe /get /subcategory:\"Detailed File Share\" /r 2>$null\n                    if ($LASTEXITCODE -eq 0) {\n                        $csvData = $auditResult | ConvertFrom-Csv\n                        $currentSetting = ($csvData | Where-Object { $_.'Subcategory' -like \"*Detailed File Share*\" }).'Inclusion Setting'\n                        return @{ Result = $currentSetting }\n                    }\n                }\n                catch {\n                    return @{ Result = 'No Auditing' }\n                }\n                return @{ Result = 'No Auditing' }\n            ";
+ ModuleVersion = "2.12.0.0";
+ ResourceID = "[Script]ConfigureDetailedFileShareAuditing";
+ ConfigurationName = "AzureBaseline_SystemAuditPoliciesObjectAccess";
+};
+instance of MSFT_ScriptResource as $MSFT_ScriptResource2ref
+{
+TestScript = "$AuditFileShare ='No Auditing'\n\n                $targetSetting = $AuditFileShare\n                try {\n                    $auditResult = & auditpol.exe /get /subcategory:\"File Share\" /r 2>$null\n                    if ($LASTEXITCODE -eq 0) {\n                        $csvData = $auditResult | ConvertFrom-Csv\n                        $currentSetting = ($csvData | Where-Object { $_.'Subcategory' -like \"*File Share*\" }).'Inclusion Setting'\n                        return ($currentSetting -eq $targetSetting)\n                    }\n                }\n                catch {\n                    return $false\n                }\n                return $false\n            ";
+ ModuleName = "PSDscResources";
+ SetScript = "$AuditFileShare ='No Auditing'\n\n                $targetSetting = $AuditFileShare\n                if ($targetSetting -eq 'Success and Failure') {\n                    & auditpol.exe /set /subcategory:\"File Share\" /success:enable /failure:enable\n                } elseif ($targetSetting -eq 'Success') {\n                    & auditpol.exe /set /subcategory:\"File Share\" /success:enable /failure:disable\n                } elseif ($targetSetting -eq 'Failure') {\n                    & auditpol.exe /set /subcategory:\"File Share\" /success:disable /failure:enable\n                } else {\n                    & auditpol.exe /set /subcategory:\"File Share\" /success:disable /failure:disable\n                }\n            ";
+ SourceInfo = "C:\\git\\AzureGuestConfigurationCIS\\GuestConfiguration\\AzureBaseline_SystemAuditPoliciesObjectAccess\\AzureBaseline_SystemAuditPoliciesObjectAccess.ps1::66::9::Script";
+ GetScript = "\n                try {\n                    $auditResult = & auditpol.exe /get /subcategory:\"File Share\" /r 2>$null\n                    if ($LASTEXITCODE -eq 0) {\n                        $csvData = $auditResult | ConvertFrom-Csv\n                        $currentSetting = ($csvData | Where-Object { $_.'Subcategory' -like \"*File Share*\" }).'Inclusion Setting'\n                        return @{ Result = $currentSetting }\n                    }\n                }\n                catch {\n                    return @{ Result = 'No Auditing' }\n                }\n                return @{ Result = 'No Auditing' }\n            ";
+ ModuleVersion = "2.12.0.0";
+ ResourceID = "[Script]ConfigureFileShareAuditing";
+ ConfigurationName = "AzureBaseline_SystemAuditPoliciesObjectAccess";
+};
+instance of MSFT_ScriptResource as $MSFT_ScriptResource3ref
+{
+TestScript = "$AuditFileSystem ='No Auditing'\n\n                $targetSetting = $AuditFileSystem\n                try {\n                    $auditResult = & auditpol.exe /get /subcategory:\"File System\" /r 2>$null\n                    if ($LASTEXITCODE -eq 0) {\n                        $csvData = $auditResult | ConvertFrom-Csv\n                        $currentSetting = ($csvData | Where-Object { $_.'Subcategory' -like \"*File System*\" }).'Inclusion Setting'\n                        return ($currentSetting -eq $targetSetting)\n                    }\n                }\n                catch {\n                    return $false\n                }\n                return $false\n            ";
+ ModuleName = "PSDscResources";
+ SetScript = "$AuditFileSystem ='No Auditing'\n\n                $targetSetting = $AuditFileSystem\n                if ($targetSetting -eq 'Success and Failure') {\n                    & auditpol.exe /set /subcategory:\"File System\" /success:enable /failure:enable\n                } elseif ($targetSetting -eq 'Success') {\n                    & auditpol.exe /set /subcategory:\"File System\" /success:enable /failure:disable\n                } elseif ($targetSetting -eq 'Failure') {\n                    & auditpol.exe /set /subcategory:\"File System\" /success:disable /failure:enable\n                } else {\n                    & auditpol.exe /set /subcategory:\"File System\" /success:disable /failure:disable\n                }\n            ";
+ SourceInfo = "C:\\git\\AzureGuestConfigurationCIS\\GuestConfiguration\\AzureBaseline_SystemAuditPoliciesObjectAccess\\AzureBaseline_SystemAuditPoliciesObjectAccess.ps1::113::9::Script";
+ GetScript = "\n                try {\n                    $auditResult = & auditpol.exe /get /subcategory:\"File System\" /r 2>$null\n                    if ($LASTEXITCODE -eq 0) {\n                        $csvData = $auditResult | ConvertFrom-Csv\n                        $currentSetting = ($csvData | Where-Object { $_.'Subcategory' -like \"*File System*\" }).'Inclusion Setting'\n                        return @{ Result = $currentSetting }\n                    }\n                }\n                catch {\n                    return @{ Result = 'No Auditing' }\n                }\n                return @{ Result = 'No Auditing' }\n            ";
+ ModuleVersion = "2.12.0.0";
+ ResourceID = "[Script]ConfigureFileSystemAuditing";
+ ConfigurationName = "AzureBaseline_SystemAuditPoliciesObjectAccess";
+};
+instance of OMI_ConfigurationDocument
+
+                    {
+ Version="2.0.0";
+
+                        MinimumCompatibleVersion = "1.0.0";
+
+                        CompatibleVersionAdditionalProperties= {"Omi_BaseResource:ConfigurationName"};
+
+                        Author="amirb";
+
+                        GenerationDate="07/09/2025 14:33:54";
+
+                        GenerationHost="AMIAI300";
+
+                        Name="AzureBaseline_SystemAuditPoliciesObjectAccess";
+
+                    };

@@ -1,0 +1,7 @@
+[ClassVersion("1.0.0.0"), FriendlyName("AuditPolicySubcategory")]
+class AuditPolicySubcategory : OMI_BaseResource
+{
+    [Key, Description("The name of the audit policy subcategory")] String Name;
+    [Required, Description("The audit flag to set"), ValueMap{"No Auditing","Success","Failure","Success and Failure"}, Values{"No Auditing","Success","Failure","Success and Failure"}] String AuditFlag;
+    [Write, Description("Whether the audit policy should be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+};
