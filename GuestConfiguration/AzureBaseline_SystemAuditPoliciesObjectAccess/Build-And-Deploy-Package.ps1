@@ -102,6 +102,46 @@ if ((Test-Path $packageFile) -and -not $Force) {
     try {
         $packagePath = New-GuestConfigurationPackage -Name $configName -Configuration $mofFile.FullName -Path $outputPath -Type AuditAndSet -Version '1.0.0.0' -Force
         Write-Host "  ✓ Package created successfully" -ForegroundColor Green
+        
+        # Fix package metadata if needed (common issue with GuestConfiguration module)
+        Write-Host "  Verifying package metadata..." -ForegroundColor Cyan
+        $tempVerifyDir = New-TemporaryFile; Remove-Item $tempVerifyDir; $tempVerifyDir = New-Item -ItemType Directory -Path $tempVerifyDir.FullName
+        try {
+            Expand-Archive -Path $packagePath.Path -DestinationPath $tempVerifyDir -Force
+            $metaConfigFile = Get-ChildItem -Path $tempVerifyDir -Filter "*.metaconfig.json" | Select-Object -First 1
+            if ($metaConfigFile) {
+                $metaConfig = Get-Content $metaConfigFile.FullName | ConvertFrom-Json
+                $needsUpdate = $false
+                
+                # Check if Name is missing
+                if (-not $metaConfig.Name -or $metaConfig.Name -eq "") {
+                    Write-Host "  Fixing package Name..." -ForegroundColor Yellow
+                    $metaConfig | Add-Member -Name "Name" -Value $configName -MemberType NoteProperty -Force
+                    $needsUpdate = $true
+                }
+                
+                # Check if ContentHash is missing and fix it
+                if (-not $metaConfig.ContentHash -or $metaConfig.ContentHash -eq "") {
+                    Write-Host "  Fixing package ContentHash..." -ForegroundColor Yellow
+                    $mofFile = Get-ChildItem -Path $tempVerifyDir -Filter "*.mof" | Select-Object -First 1
+                    if ($mofFile) {
+                        $mofHash = Get-FileHash -Path $mofFile.FullName -Algorithm SHA256
+                        $metaConfig | Add-Member -Name "ContentHash" -Value $mofHash.Hash.ToLower() -MemberType NoteProperty -Force
+                        $needsUpdate = $true
+                    }
+                }
+                
+                if ($needsUpdate) {
+                    Write-Host "  Updating package metadata..." -ForegroundColor Yellow
+                    $metaConfig | ConvertTo-Json -Depth 10 | Set-Content $metaConfigFile.FullName -Encoding UTF8
+                    Remove-Item $packagePath.Path
+                    Compress-Archive -Path "$tempVerifyDir\*" -DestinationPath $packagePath.Path -Force
+                    Write-Host "  ✓ Package metadata fixed" -ForegroundColor Green
+                }
+            }
+        } finally {
+            Remove-Item -Recurse -Force $tempVerifyDir
+        }
     }
     catch {
         Write-Error "Failed to create Guest Configuration package: $($_.Exception.Message)"

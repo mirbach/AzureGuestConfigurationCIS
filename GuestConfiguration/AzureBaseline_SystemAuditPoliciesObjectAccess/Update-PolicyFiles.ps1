@@ -44,6 +44,12 @@ if ($deployPolicyFile) {
     Write-Host "Updating DeployIfNotExists policy file..." -ForegroundColor Cyan
     $content = Get-Content $deployPolicyFile.FullName -Raw | ConvertFrom-Json
     
+    # Update the contentUri and contentHash in the metadata.guestConfiguration section
+    if ($content.properties.metadata.PSObject.Properties['guestConfiguration']) {
+        $content.properties.metadata.guestConfiguration | Add-Member -Name "contentUri" -Value $PackageUri -MemberType NoteProperty -Force
+        $content.properties.metadata.guestConfiguration | Add-Member -Name "contentHash" -Value $ContentHash -MemberType NoteProperty -Force
+    }
+    
     # Update the contentUri and contentHash in the deployment template resources (for DeployIfNotExists policies)
     if ($content.properties.policyRule.then.details.PSObject.Properties['deployment']) {
         # Update contentUri and contentHash in all guestConfiguration sections in the deployment template
