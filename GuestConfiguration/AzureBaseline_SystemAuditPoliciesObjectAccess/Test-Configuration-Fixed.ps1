@@ -44,8 +44,8 @@ param(
     [string]$AuditFileSystem = "Success and Failure",
     
     [Parameter(Mandatory = $false)]
-    [ValidateSet("Audit", "ApplyAndMonitor", "ApplyAndAutoCorrect")]
-    [string]$AssignmentType = "ApplyAndMonitor"
+    [ValidateSet("Audit", "Apply and Monitor", "Apply and Autocorrect")]
+    [string]$AssignmentType = "Apply and Monitor"
 )
 
 # Check if running as administrator
@@ -64,8 +64,8 @@ Write-Host "  AuditFileSystem: $AuditFileSystem" -ForegroundColor White
 
 Write-Host "`nGuest Configuration Assignment Types:" -ForegroundColor Magenta
 Write-Host "  Audit: Report on state, but don't make changes" -ForegroundColor White
-Write-Host "  ApplyAndMonitor: Apply once and monitor for changes" -ForegroundColor White
-Write-Host "  ApplyAndAutoCorrect: Apply and auto-correct if drift occurs" -ForegroundColor White
+Write-Host "  Apply and Monitor: Apply once and monitor for changes" -ForegroundColor White
+Write-Host "  Apply and Autocorrect: Apply and auto-correct if drift occurs" -ForegroundColor White
 Write-Host "  Current test mode: $AssignmentType" -ForegroundColor Yellow
 
 # Import the configuration
@@ -99,7 +99,7 @@ try
             $testResult = Test-DscConfiguration -Path $tempPath -Detailed
             Write-Host "Compliance check completed (no changes applied)" -ForegroundColor Green
         }
-        "ApplyAndMonitor" {
+        "Apply and Monitor" {
             Write-Host "APPLY AND MONITOR MODE: Applying configuration once..." -ForegroundColor Yellow
             # Apply the configuration once
             Start-DscConfiguration -Path $tempPath -Wait -Verbose -Force
@@ -107,7 +107,7 @@ try
             # Test compliance after application
             $testResult = Test-DscConfiguration -Detailed
         }
-        "ApplyAndAutoCorrect" {
+        "Apply and Autocorrect" {
             Write-Host "APPLY AND AUTO-CORRECT MODE: Applying configuration with monitoring..." -ForegroundColor Yellow
             # Apply the configuration
             Start-DscConfiguration -Path $tempPath -Wait -Verbose -Force
@@ -125,11 +125,11 @@ try
             "Audit" {
                 Write-Host "  - Audit: Would report compliant status to Azure without changes" -ForegroundColor White
             }
-            "ApplyAndMonitor" {
-                Write-Host "  - ApplyAndMonitor: Configuration applied and would be monitored for drift" -ForegroundColor White
+            "Apply and Monitor" {
+                Write-Host "  - Apply and Monitor: Configuration applied and would be monitored for drift" -ForegroundColor White
             }
-            "ApplyAndAutoCorrect" {
-                Write-Host "  - ApplyAndAutoCorrect: Configuration applied and would auto-correct if drift occurs" -ForegroundColor White
+            "Apply and Autocorrect" {
+                Write-Host "  - Apply and Autocorrect: Configuration applied and would auto-correct if drift occurs" -ForegroundColor White
             }
         }
     }
@@ -141,11 +141,11 @@ try
             "Audit" {
                 Write-Host "  - Audit: Would report non-compliant status to Azure (no remediation)" -ForegroundColor White
             }
-            "ApplyAndMonitor" {
-                Write-Host "  - ApplyAndMonitor: Would remain non-compliant until manual remediation" -ForegroundColor White
+            "Apply and Monitor" {
+                Write-Host "  - Apply and Monitor: Would remain non-compliant until manual remediation" -ForegroundColor White
             }
-            "ApplyAndAutoCorrect" {
-                Write-Host "  - ApplyAndAutoCorrect: Would automatically attempt to correct the drift" -ForegroundColor White
+            "Apply and Autocorrect" {
+                Write-Host "  - Apply and Autocorrect: Would automatically attempt to correct the drift" -ForegroundColor White
             }
         }
         Write-Host "Resources not in desired state:" -ForegroundColor Yellow
@@ -207,13 +207,13 @@ Write-Host "  2. Click 'Assign Policy'" -ForegroundColor White
 Write-Host "  3. Select your DeployIfNotExists policy definition" -ForegroundColor White
 Write-Host "  4. In 'Parameters' tab, set 'Assignment Type' to:" -ForegroundColor White
 Write-Host "     - Audit (default)" -ForegroundColor Gray
-Write-Host "     - ApplyAndMonitor" -ForegroundColor Gray
-Write-Host "     - ApplyAndAutoCorrect" -ForegroundColor Gray
+Write-Host "     - Apply and Monitor" -ForegroundColor Gray
+Write-Host "     - Apply and Autocorrect" -ForegroundColor Gray
 
 Write-Host "`nAzure PowerShell:" -ForegroundColor Cyan
-Write-Host "  # Create assignment with ApplyAndAutoCorrect" -ForegroundColor White
+Write-Host "  # Create assignment with Apply and Autocorrect" -ForegroundColor White
 Write-Host "  `$params = @{" -ForegroundColor Gray
-Write-Host "    'assignmentType' = 'ApplyAndAutoCorrect'" -ForegroundColor Gray
+Write-Host "    'assignmentType' = 'Apply and Autocorrect'" -ForegroundColor Gray
 Write-Host "    'AuditFileSystem' = 'Success and Failure'" -ForegroundColor Gray
 Write-Host "  }" -ForegroundColor Gray
 Write-Host "  New-AzPolicyAssignment -Name 'audit-policy' \" -ForegroundColor Gray
@@ -226,14 +226,14 @@ Write-Host "  az policy assignment create \" -ForegroundColor Gray
 Write-Host "    --name 'audit-policy' \" -ForegroundColor Gray
 Write-Host "    --policy 'GG-Deploy-SystemAuditPolicies-ObjectAccess' \" -ForegroundColor Gray
 Write-Host "    --scope '/subscriptions/your-sub-id' \" -ForegroundColor Gray
-Write-Host "    --params '{\"assignmentType\":{\"value\":\"ApplyAndAutoCorrect\"}}'" -ForegroundColor Gray
+Write-Host "    --params '{\"assignmentType\":{\"value\":\"Apply and Autocorrect\"}}'" -ForegroundColor Gray
 
 Write-Host "`nLocal Testing Examples:" -ForegroundColor Magenta
 Write-Host "  Test in Audit mode:" -ForegroundColor White
 Write-Host "    .\Test-Configuration.ps1 -AssignmentType Audit" -ForegroundColor Gray
-Write-Host "  Test in ApplyAndMonitor mode:" -ForegroundColor White
-Write-Host "    .\Test-Configuration.ps1 -AssignmentType 'ApplyAndMonitor'" -ForegroundColor Gray
-Write-Host "  Test in ApplyAndAutoCorrect mode:" -ForegroundColor White
-Write-Host "    .\Test-Configuration.ps1 -AssignmentType 'ApplyAndAutoCorrect'" -ForegroundColor Gray
+Write-Host "  Test in Apply and Monitor mode:" -ForegroundColor White
+Write-Host "    .\Test-Configuration.ps1 -AssignmentType 'Apply and Monitor'" -ForegroundColor Gray
+Write-Host "  Test in Apply and Autocorrect mode:" -ForegroundColor White
+Write-Host "    .\Test-Configuration.ps1 -AssignmentType 'Apply and Autocorrect'" -ForegroundColor Gray
 Write-Host "  Test with custom parameters:" -ForegroundColor White
-Write-Host "    .\Test-Configuration.ps1 -AuditFileSystem 'Success' -AssignmentType 'ApplyAndMonitor'" -ForegroundColor Gray
+Write-Host "    .\Test-Configuration.ps1 -AuditFileSystem 'Success' -AssignmentType 'Apply and Monitor'" -ForegroundColor Gray

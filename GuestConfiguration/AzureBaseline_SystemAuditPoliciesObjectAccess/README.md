@@ -89,22 +89,23 @@ This will:
 - Create a storage account with proper configuration
 - Save configuration for later use
 
-2. **Build the Guest Configuration package:**
-```powershell
-.\Build-GuestConfigurationPackage.ps1
-```
-
-3. **Deploy to Azure:**
+2. **Build, deploy, and update policies in one command:**
 ```powershell
 # Use the saved configuration from step 1
 $config = Get-Content ".\azure-config.json" | ConvertFrom-Json
-.\Deploy-GuestConfigurationPackage.ps1 -SubscriptionId $config.SubscriptionId -ResourceGroupName $config.ResourceGroupName -StorageAccountName $config.StorageAccountName
+.\Build-And-Deploy-Package.ps1 -Deploy -UpdatePolicyFiles -SubscriptionId $config.SubscriptionId -ResourceGroupName $config.ResourceGroupName -StorageAccountName $config.StorageAccountName
 ```
 
-4. **Update policy files with package URI:**
+**Alternative: Step-by-step approach**
 ```powershell
-# After deployment, update the policy JSON files with the package URI
-.\Update-PolicyFiles.ps1 -PackageUri "https://yourstorageaccount.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip"
+# Build the package
+.\Build-And-Deploy-Package.ps1
+
+# Deploy to Azure
+.\Build-And-Deploy-Package.ps1 -Deploy -SubscriptionId $config.SubscriptionId -ResourceGroupName $config.ResourceGroupName -StorageAccountName $config.StorageAccountName
+
+# Update policy files
+.\Build-And-Deploy-Package.ps1 -Deploy -UpdatePolicyFiles -SubscriptionId $config.SubscriptionId -ResourceGroupName $config.ResourceGroupName -StorageAccountName $config.StorageAccountName
 ```
 
 Note: The policy files use prefixes to clearly identify their type:
@@ -115,30 +116,62 @@ The display names within the files include [GG Serverhardening] to distinguish t
 ### Option 2: Manual Setup
 
 1. **Create storage account manually** (see prerequisites section above)
-2. **Build the package:**
-
-2. **Build the package:**
+2. **Build, deploy, and update policies:**
 ```powershell
-.\Build-GuestConfigurationPackage.ps1
+# All-in-one command
+.\Build-And-Deploy-Package.ps1 -Deploy -UpdatePolicyFiles -SubscriptionId "your-subscription-id" -ResourceGroupName "your-resource-group" -StorageAccountName "your-storage-account"
 ```
 
-3. **Deploy to Azure:**
+**Alternative: Step-by-step approach**
 ```powershell
-.\Deploy-GuestConfigurationPackage.ps1 -SubscriptionId "your-subscription-id" -ResourceGroupName "your-resource-group" -StorageAccountName "your-storage-account"
-```
+# Build the package
+.\Build-And-Deploy-Package.ps1
 
-4. **Update policy files with package URI:**
-```powershell
-# Copy the package URI from the deployment output and update policy files
-.\Update-PolicyFiles.ps1 -PackageUri "https://yourstorageaccount.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip"
+# Deploy to Azure
+.\Build-And-Deploy-Package.ps1 -Deploy -SubscriptionId "your-subscription-id" -ResourceGroupName "your-resource-group" -StorageAccountName "your-storage-account"
+
+# Update policy files
+.\Build-And-Deploy-Package.ps1 -Deploy -UpdatePolicyFiles -SubscriptionId "your-subscription-id" -ResourceGroupName "your-resource-group" -StorageAccountName "your-storage-account"
 ```
 
 ## Package Building Details
 
-The build script will:
-- Compile the DSC configuration
-- Create the Guest Configuration package
-- Test the package validity
+The `Build-And-Deploy-Package.ps1` script provides a unified workflow that:
+
+### Build Process:
+- Compiles the DSC configuration
+- Creates the Guest Configuration package using `New-GuestConfigurationPackage`
+- **Automatically fixes package metadata** including:
+  - Sets the `Name` field in `metaconfig.json` if missing
+  - Calculates and sets the `ContentHash` field to the SHA256 hash of the MOF file
+  - Ensures proper package structure for Azure validation
+- Tests the package validity
+
+### Deploy Process (with `-Deploy` flag):
+- Uploads the package to Azure Storage
+- Creates the `guestconfiguration` container if it doesn't exist
+- Verifies package accessibility after upload
+
+### Policy Update Process (with `-UpdatePolicyFiles` flag):
+- Automatically updates both AuditIfNotExists and DeployIfNotExists policy files
+- Sets the correct `contentUri` pointing to the Azure Storage location
+- Calculates and sets the `contentHash` to match the package SHA256 hash
+- Updates all guestConfiguration sections in the policy templates
+
+### Usage Examples:
+```powershell
+# Build only
+.\Build-And-Deploy-Package.ps1
+
+# Build and deploy
+.\Build-And-Deploy-Package.ps1 -Deploy -SubscriptionId "xxx" -ResourceGroupName "xxx" -StorageAccountName "xxx"
+
+# Complete workflow: Build, deploy, and update policies
+.\Build-And-Deploy-Package.ps1 -Deploy -UpdatePolicyFiles -SubscriptionId "xxx" -ResourceGroupName "xxx" -StorageAccountName "xxx"
+
+# Force rebuild existing package
+.\Build-And-Deploy-Package.ps1 -Force
+```
 
 ## Configuration Parameters
 
@@ -155,6 +188,19 @@ The configuration accepts the following parameters:
 - **AuditFileSystem**: Controls auditing of file system access
   - Values: "No Auditing", "Success", "Failure", "Success and Failure"
   - Default: "No Auditing"
+
+## Policy Deployment
+
+After building and deploying the package, deploy the policies to Azure:
+
+```powershell
+# Deploy both AuditIfNotExists and DeployIfNotExists policies
+.\Deploy-Policies-PowerShell.ps1
+```
+
+The policies will be created with the following IDs:
+- `GG-Audit-SystemAuditPolicies-ObjectAccess` (AuditIfNotExists)
+- `GG-Deploy-SystemAuditPolicies-ObjectAccess` (DeployIfNotExists)
 
 ## Policy Usage
 
@@ -185,11 +231,14 @@ If the Guest Configuration fails to apply:
 ```
 AzureBaseline_SystemAuditPoliciesObjectAccess/
 ├── AzureBaseline_SystemAuditPoliciesObjectAccess.ps1  # Main DSC configuration
-├── Build-GuestConfigurationPackage.ps1               # Package builder
+├── Build-And-Deploy-Package.ps1                      # Unified build/deploy script
 ├── Setup-Prerequisites.ps1                           # Azure resources setup
-├── Deploy-GuestConfigurationPackage.ps1              # Azure deployment
+├── Deploy-GuestConfigurationPackage.ps1              # Azure deployment (legacy)
+├── Update-PolicyFiles.ps1                            # Policy file updater (legacy)
+├── Fix-GuestConfigurationPackage.ps1                 # Package repair utility
 ├── Test-Configuration.ps1                            # Local testing script
 ├── README.md                                          # This documentation
+├── SCRIPTS-OVERVIEW.md                                # Script documentation
 ├── azure-config.json                                 # Generated config file
 └── Modules/
     └── AuditPolicyDsc/
@@ -204,19 +253,70 @@ AzureBaseline_SystemAuditPoliciesObjectAccess/
 
 ## Common Issues and Solutions
 
+### Build and Package Issues
+
+### "Package metadata is missing or incorrect"
+The `Build-And-Deploy-Package.ps1` script automatically fixes common metadata issues:
+- Missing `Name` field in `metaconfig.json`
+- Missing or empty `ContentHash` field in `metaconfig.json`
+- Run with `-Force` to rebuild the package if needed
+
+### "Input provided for ContentUri/ContentHash is invalid"
+This Azure validation error can occur during policy remediation. Solutions:
+1. **Rebuild the package**: Run `.\Build-And-Deploy-Package.ps1 -Force` to ensure metadata is correct
+2. **Verify package accessibility**: Check that the package URL is accessible from Azure
+3. **Check hash consistency**: Ensure the `contentHash` in policy files matches the actual package hash
+4. **Azure service issues**: This error can sometimes indicate temporary Azure service issues - try again later
+5. **Use Fix-GuestConfigurationPackage.ps1**: If package has metadata issues, run this script to repair it
+
 ### "Storage account does not exist"
 - Run `Setup-Prerequisites.ps1` first, or manually create the storage account
 - Ensure you have the correct subscription ID and resource group name
 
 ### "Package not found"
-- Run `Build-GuestConfigurationPackage.ps1` before deploying
+- Run `Build-And-Deploy-Package.ps1` before deploying
 - Check that the Output directory contains the .zip file
 
 ### "Access denied to storage account"
 - Ensure you have Contributor or Storage Account Contributor permissions
 - Verify the storage account allows blob public access
 
+### Policy Deployment Issues
+
+### "Policy assignments must include a 'managed identity' when assigning 'DeployIfNotExists' policy definitions"
+This is expected behavior for DeployIfNotExists policies. When creating policy assignments:
+- Use Azure Portal, Azure CLI, or PowerShell with `-AssignIdentity` parameter
+- Ensure the managed identity has appropriate permissions
+
 ### "Guest Configuration assignment fails"
 - Check that the VM has the Guest Configuration extension installed
 - Verify the VM has internet connectivity to download packages
 - Review Guest Configuration logs in Event Viewer (Windows Logs > Applications and Services Logs > Microsoft > Windows > Guest Configuration)
+
+### Package Validation Issues
+
+### "No report was generated. The package likely was not formed correctly"
+This indicates package structure issues:
+1. Run `.\Fix-GuestConfigurationPackage.ps1` to repair metadata
+2. Rebuild the package with `.\Build-And-Deploy-Package.ps1 -Force`
+3. Check that the MOF file is valid and contains expected configuration
+
+### ContentHash Mismatch
+If you encounter hash-related errors:
+1. The `contentHash` in policy files must match the SHA256 hash of the entire package
+2. The `ContentHash` in `metaconfig.json` must match the SHA256 hash of the MOF file
+3. Both hashes should be in lowercase hexadecimal format
+4. Use the unified script to ensure consistency: `.\Build-And-Deploy-Package.ps1 -Deploy -UpdatePolicyFiles`
+
+### Azure Service Issues
+If errors persist despite correct package structure:
+- Check Azure Service Health for Guest Configuration service issues
+- Try deploying to a different Azure region
+- Contact Azure Support for service-specific issues
+
+### Debugging Steps
+1. **Verify package structure**: Extract the .zip file and check `metaconfig.json` content
+2. **Test package accessibility**: Use `Invoke-WebRequest` to verify the package URL is accessible
+3. **Check hash consistency**: Compare package hash with policy file `contentHash`
+4. **Review Azure Activity Log**: Check for detailed error messages in Azure portal
+5. **Enable verbose logging**: Use `-Verbose` parameter with PowerShell commands

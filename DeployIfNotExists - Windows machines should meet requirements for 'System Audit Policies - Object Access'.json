@@ -14,12 +14,12 @@
         "name": "AzureBaseline_SystemAuditPoliciesObjectAccess",
         "version": "1.0.0.0",
         "configurationParameter": {
-          "AuditDetailedFileShare": "Audit Detailed File Share;ExpectedValue",
-          "AuditFileShare": "Audit File Share;ExpectedValue",
-          "AuditFileSystem": "Audit File System;ExpectedValue"
+          "AuditDetailedFileShare": "[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag",
+          "AuditFileShare": "[AuditPolicySubcategory]Audit File Share;AuditFlag",
+          "AuditFileSystem": "[AuditPolicySubcategory]Audit File System;AuditFlag"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip",
-        "contentHash": "68F020AF8FA2B91F7020A2F8FA62AB27B92CFDF81F3C02A907EA7CBB15915E11"
+        "contentHash": "DAC587B13ED9A20F16686A35DBAC975553E237221F7D7C6B32CC405ED45097A3"
       }
     },
     "version": "1.0.0",
@@ -78,6 +78,19 @@
           "Success and Failure"
         ],
         "defaultValue": "Success and Failure"
+      },
+      "assignmentType": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Assignment Type",
+          "description": "Defines how the guest configuration assignment should behave: Audit (check compliance only), ApplyAndMonitor (apply once and monitor), or ApplyAndAutoCorrect (apply and auto-correct drift)"
+        },
+        "allowedValues": [
+          "Audit",
+          "ApplyAndMonitor",
+          "ApplyAndAutoCorrect"
+        ],
+        "defaultValue": "ApplyAndMonitor"
       },
       "effect": {
         "type": "String",
@@ -304,7 +317,7 @@
             "allOf": [
               {
                 "field": "Microsoft.GuestConfiguration/guestConfigurationAssignments/parameterHash",
-                "equals": "[base64(concat('Audit Detailed File Share;ExpectedValue', '=', parameters('AuditDetailedFileShare'), ',', 'Audit File Share;ExpectedValue', '=', parameters('AuditFileShare'), ',', 'Audit File System;ExpectedValue', '=', parameters('AuditFileSystem')))]"
+                "equals": "[base64(concat('[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag', '=', parameters('AuditDetailedFileShare'), ',', '[AuditPolicySubcategory]Audit File Share;AuditFlag', '=', parameters('AuditFileShare'), ',', '[AuditPolicySubcategory]Audit File System;AuditFlag', '=', parameters('AuditFileSystem')))]"
               }
             ]
           },
@@ -332,6 +345,9 @@
                 },
                 "AuditFileSystem": {
                   "value": "[parameters('AuditFileSystem')]"
+                },
+                "assignmentType": {
+                  "value": "[parameters('assignmentType')]"
                 }
               },
               "template": {
@@ -358,12 +374,15 @@
                   },
                   "AuditFileSystem": {
                     "type": "string"
+                  },
+                  "assignmentType": {
+                    "type": "string"
                   }
                 },
                 "resources": [
                   {
                     "condition": "[equals(toLower(parameters('type')), toLower('microsoft.hybridcompute/machines'))]",
-                    "apiVersion": "2018-11-20",
+                    "apiVersion": "2024-04-05",
                     "type": "Microsoft.HybridCompute/machines/providers/guestConfigurationAssignments",
                     "name": "[concat(parameters('vmName'), '/Microsoft.GuestConfiguration/', parameters('configurationName'))]",
                     "location": "[parameters('location')]",
@@ -371,28 +390,29 @@
                       "guestConfiguration": {
                         "name": "[parameters('configurationName')]",
                         "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [
                           {
-                            "name": "Audit Detailed File Share;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag",
                             "value": "[parameters('AuditDetailedFileShare')]"
                           },
                           {
-                            "name": "Audit File Share;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit File Share;AuditFlag",
                             "value": "[parameters('AuditFileShare')]"
                           },
                           {
-                            "name": "Audit File System;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit File System;AuditFlag",
                             "value": "[parameters('AuditFileSystem')]"
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip",
-                        "contentHash": "68F020AF8FA2B91F7020A2F8FA62AB27B92CFDF81F3C02A907EA7CBB15915E11"
+                        "contentHash": "DAC587B13ED9A20F16686A35DBAC975553E237221F7D7C6B32CC405ED45097A3"
                       }
                     }
                   },
                   {
                     "condition": "[equals(toLower(parameters('type')), toLower('Microsoft.Compute/virtualMachines'))]",
-                    "apiVersion": "2018-11-20",
+                    "apiVersion": "2024-04-05",
                     "type": "Microsoft.Compute/virtualMachines/providers/guestConfigurationAssignments",
                     "name": "[concat(parameters('vmName'), '/Microsoft.GuestConfiguration/', parameters('configurationName'))]",
                     "location": "[parameters('location')]",
@@ -400,28 +420,29 @@
                       "guestConfiguration": {
                         "name": "[parameters('configurationName')]",
                         "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [
                           {
-                            "name": "Audit Detailed File Share;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag",
                             "value": "[parameters('AuditDetailedFileShare')]"
                           },
                           {
-                            "name": "Audit File Share;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit File Share;AuditFlag",
                             "value": "[parameters('AuditFileShare')]"
                           },
                           {
-                            "name": "Audit File System;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit File System;AuditFlag",
                             "value": "[parameters('AuditFileSystem')]"
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip",
-                        "contentHash": "68F020AF8FA2B91F7020A2F8FA62AB27B92CFDF81F3C02A907EA7CBB15915E11"
+                        "contentHash": "DAC587B13ED9A20F16686A35DBAC975553E237221F7D7C6B32CC405ED45097A3"
                       }
                     }
                   },
                   {
                     "condition": "[equals(toLower(parameters('type')), toLower('Microsoft.ConnectedVMwarevSphere/virtualMachines'))]",
-                    "apiVersion": "2018-11-20",
+                    "apiVersion": "2024-04-05",
                     "type": "Microsoft.ConnectedVMwarevSphere/virtualMachines/providers/guestConfigurationAssignments",
                     "name": "[concat(parameters('vmName'), '/Microsoft.GuestConfiguration/', parameters('configurationName'))]",
                     "location": "[parameters('location')]",
@@ -429,22 +450,23 @@
                       "guestConfiguration": {
                         "name": "[parameters('configurationName')]",
                         "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [
                           {
-                            "name": "Audit Detailed File Share;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag",
                             "value": "[parameters('AuditDetailedFileShare')]"
                           },
                           {
-                            "name": "Audit File Share;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit File Share;AuditFlag",
                             "value": "[parameters('AuditFileShare')]"
                           },
                           {
-                            "name": "Audit File System;ExpectedValue",
+                            "name": "[AuditPolicySubcategory]Audit File System;AuditFlag",
                             "value": "[parameters('AuditFileSystem')]"
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip",
-                        "contentHash": "68F020AF8FA2B91F7020A2F8FA62AB27B92CFDF81F3C02A907EA7CBB15915E11"
+                        "contentHash": "DAC587B13ED9A20F16686A35DBAC975553E237221F7D7C6B32CC405ED45097A3"
                       }
                     }
                   }

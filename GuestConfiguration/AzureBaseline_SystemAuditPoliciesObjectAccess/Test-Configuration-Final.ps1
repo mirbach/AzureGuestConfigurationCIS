@@ -3,8 +3,8 @@
 # 
 # Guest Configuration Assignment Types:
 # - Audit: Report on the state of the machine, but don't make changes
-# - Apply and Monitor: Applied once and monitored for changes (no auto-correction)
-# - Apply and Autocorrect: Applied and automatically corrected if drift occurs
+# - ApplyAndMonitor: Applied once and monitored for changes (no auto-correction)
+# - ApplyAndAutoCorrect: Applied and automatically corrected if drift occurs
 #
 # Policy Types:
 # - AuditIfNotExists: Checks if Guest Configuration assignment exists and is compliant
@@ -18,13 +18,13 @@
 #   - Drift handling: No automatic correction, only reporting
 #   - Remediation: Manual intervention required
 #
-# APPLY AND MONITOR:
+# APPLYANDMONITOR:
 #   - Behavior: Applies configuration once, then monitors for drift
 #   - Use case: One-time configuration with ongoing monitoring
 #   - Drift handling: Detected and reported, but not automatically corrected
 #   - Remediation: Requires manual remediation trigger or re-assignment
 #
-# APPLY AND AUTOCORRECT:
+# APPLYANDAUTOCORRECT:
 #   - Behavior: Applies configuration and automatically corrects drift
 #   - Use case: Continuous compliance enforcement
 #   - Drift handling: Automatically corrected at next evaluation cycle
@@ -232,8 +232,8 @@ Write-Host "`nLocal Testing Examples:" -ForegroundColor Magenta
 Write-Host "  Test in Audit mode:" -ForegroundColor White
 Write-Host "    .\Test-Configuration.ps1 -AssignmentType Audit" -ForegroundColor Gray
 Write-Host "  Test in ApplyAndMonitor mode:" -ForegroundColor White
-Write-Host "    .\Test-Configuration.ps1 -AssignmentType 'ApplyAndMonitor'" -ForegroundColor Gray
+Write-Host "    .\Test-Configuration.ps1 -AssignmentType ApplyAndMonitor" -ForegroundColor Gray
 Write-Host "  Test in ApplyAndAutoCorrect mode:" -ForegroundColor White
-Write-Host "    .\Test-Configuration.ps1 -AssignmentType 'ApplyAndAutoCorrect'" -ForegroundColor Gray
+Write-Host "    .\Test-Configuration.ps1 -AssignmentType ApplyAndAutoCorrect" -ForegroundColor Gray
 Write-Host "  Test with custom parameters:" -ForegroundColor White
-Write-Host "    .\Test-Configuration.ps1 -AuditFileSystem 'Success' -AssignmentType 'ApplyAndMonitor'" -ForegroundColor Gray
+Write-Host "    .\Test-Configuration.ps1 -AuditFileSystem 'Success' -AssignmentType ApplyAndMonitor" -ForegroundColor Gray

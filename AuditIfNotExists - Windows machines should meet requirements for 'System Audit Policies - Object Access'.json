@@ -14,12 +14,12 @@
         "name": "AzureBaseline_SystemAuditPoliciesObjectAccess",
         "version": "1.0.0.0",
         "configurationParameter": {
-          "AuditDetailedFileShare": "Audit Detailed File Share;ExpectedValue",
-          "AuditFileShare": "Audit File Share;ExpectedValue",
-          "AuditFileSystem": "Audit File System;ExpectedValue"
+          "AuditDetailedFileShare": "[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag",
+          "AuditFileShare": "[AuditPolicySubcategory]Audit File Share;AuditFlag",
+          "AuditFileSystem": "[AuditPolicySubcategory]Audit File System;AuditFlag"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip",
-        "contentHash": "68F020AF8FA2B91F7020A2F8FA62AB27B92CFDF81F3C02A907EA7CBB15915E11"
+        "contentHash": "DAC587B13ED9A20F16686A35DBAC975553E237221F7D7C6B32CC405ED45097A3"
       }
     },
     "version": "3.0.0",
@@ -305,7 +305,7 @@
               },
               {
                 "field": "Microsoft.GuestConfiguration/guestConfigurationAssignments/parameterHash",
-                "equals": "[base64(concat('Audit Detailed File Share;ExpectedValue', '=', parameters('AuditDetailedFileShare'), ',', 'Audit File Share;ExpectedValue', '=', parameters('AuditFileShare'), ',', 'Audit File System;ExpectedValue', '=', parameters('AuditFileSystem')))]"
+                "equals": "[base64(concat('[AuditPolicySubcategory]Audit Detailed File Share;AuditFlag', '=', parameters('AuditDetailedFileShare'), ',', '[AuditPolicySubcategory]Audit File Share;AuditFlag', '=', parameters('AuditFileShare'), ',', '[AuditPolicySubcategory]Audit File System;AuditFlag', '=', parameters('AuditFileSystem')))]"
               }
             ]
           }

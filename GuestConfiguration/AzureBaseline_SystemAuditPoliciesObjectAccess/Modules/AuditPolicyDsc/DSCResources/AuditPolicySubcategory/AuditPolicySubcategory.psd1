@@ -7,7 +7,7 @@
     Copyright = '(c) Microsoft Corporation. All rights reserved.'
     Description = 'DSC resource for managing audit policy subcategories'
     PowerShellVersion = '5.0'
-    FunctionsToExport = @()
+    FunctionsToExport = @('Get-TargetResource', 'Set-TargetResource', 'Test-TargetResource')
     CmdletsToExport = @()
     VariablesToExport = @()
     AliasesToExport = @()
