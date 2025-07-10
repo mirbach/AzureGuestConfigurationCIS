@@ -38,7 +38,7 @@
         "name": "AzureBaseline_AdminstrativeTemplatesMSSLegacy",
         "version": "1.*",
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_MSSLegacy.zip",
-        "contentHash": "C75718E1B00A54C35C09C15B4CF6345AEA7AB273AE99DCF8DC1A53E6314ED91F"
+        "contentHash": "664442CDAD5562B54D7356D39482FA78B4E4EBB27E736C4C8DFA380A31097523"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Administrative Templates - MSS (Legacy)' for automatic logon, screen saver, network behavior, safe DLL, and event log. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

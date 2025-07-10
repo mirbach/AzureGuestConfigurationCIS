@@ -38,7 +38,7 @@
         "name": "AzureBaseline_SecurityOptionsMicrosoftNetworkServer",
         "version": "1.*",
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_MicrosoftNetworkServer.zip",
-        "contentHash": "FDE1E4167A955CF35F611C7A3D065CE09CD816CB290B7F43AF08F9647076D018"
+        "contentHash": "14DE6928337E08EF879551A5E5F6DD961B333A4C032E8D3FA196AA98E909A7AE"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - Microsoft Network Server' for disabling SMB v1 server. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

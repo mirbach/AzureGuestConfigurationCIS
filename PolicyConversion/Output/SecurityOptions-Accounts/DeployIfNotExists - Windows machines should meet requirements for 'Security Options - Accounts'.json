@@ -14,8 +14,8 @@
         "name": "AzureBaseline_SecurityOptionsAccounts",
         "version": "1.0.0.0",
         "configurationParameter": {},
-        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAccounts.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Accounts.zip",
+        "contentHash": "73FC35E3B28E3DBF8099DB92F7F9F0798456B79A9B22CD005EA37CB162570A26"
       }
     },
     "version": "1.0.0",
@@ -302,7 +302,7 @@
                 "AccountsGuestAccountStatus": {
                   "value": "[parameters('AccountsGuestAccountStatus')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -325,7 +325,7 @@
                   "AccountsGuestAccountStatus": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -347,8 +347,8 @@
                             "value": "[parameters('AccountsGuestAccountStatus')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAccounts.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Accounts.zip",
+                        "contentHash": "73FC35E3B28E3DBF8099DB92F7F9F0798456B79A9B22CD005EA37CB162570A26"
                       }
                     }
                   },
@@ -369,8 +369,8 @@
                             "value": "[parameters('AccountsGuestAccountStatus')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAccounts.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Accounts.zip",
+                        "contentHash": "73FC35E3B28E3DBF8099DB92F7F9F0798456B79A9B22CD005EA37CB162570A26"
                       }
                     }
                   },
@@ -391,8 +391,8 @@
                             "value": "[parameters('AccountsGuestAccountStatus')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAccounts.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Accounts.zip",
+                        "contentHash": "73FC35E3B28E3DBF8099DB92F7F9F0798456B79A9B22CD005EA37CB162570A26"
                       }
                     }
                   }
@@ -405,7 +405,3 @@
     }
   }
 }
-
-
-
-

@@ -67,7 +67,7 @@
           "TurnOffMulticastNameResolution": "Turn off multicast name resolution;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_Network.zip",
-        "contentHash": "05F8F3897F8D14B1CE18D3C834A62F55EAB6C0202B18FC8D2C70F4CDD09F3DB5"
+        "contentHash": "F42A8880F13E212500A3A23582160E305DD3DA264620C0969048572A71283DBC"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Administrative Templates - Network' for guest logons, simultaneous connections, network bridge, ICS, and multicast name resolution. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

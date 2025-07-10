@@ -67,7 +67,7 @@
           "NetworkAccessSharesThatCanBeAccessedAnonymously": "Network access: Shares that can be accessed anonymously;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkAccess.zip",
-        "contentHash": "5E72F0C0D423C9024E8ABD380FEFE6C9961B5859BAC114E58D55A955E814B973"
+        "contentHash": "E2961799EC5695DB46C7238B1E24B1BE2A079D0D3E715642A8229638968E6E5D"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - Network Access' for including access for anonymous users, local accounts, and remote access to the registry. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",
@@ -296,4 +296,3 @@
     "policyType": "BuiltIn"
   }
 }
-

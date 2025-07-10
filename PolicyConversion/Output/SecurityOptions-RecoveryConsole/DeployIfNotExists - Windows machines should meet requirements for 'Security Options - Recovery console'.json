@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Recoveryconsole.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "F3DE0B0DF80E3E447060FF1C06078D53BE4088AF72B3D9DC1777FB4D8C07F5A9"
       }
     },
     "version": "1.0.0",
@@ -302,7 +302,7 @@
                 "RecoveryConsoleAllowFloppyCopyAndAccessToAllDrivesAndAllFolders": {
                   "value": "[parameters('RecoveryConsoleAllowFloppyCopyAndAccessToAllDrivesAndAllFolders')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -325,7 +325,7 @@
                   "RecoveryConsoleAllowFloppyCopyAndAccessToAllDrivesAndAllFolders": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -348,7 +348,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Recoveryconsole.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "F3DE0B0DF80E3E447060FF1C06078D53BE4088AF72B3D9DC1777FB4D8C07F5A9"
                       }
                     }
                   },
@@ -370,7 +370,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Recoveryconsole.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "F3DE0B0DF80E3E447060FF1C06078D53BE4088AF72B3D9DC1777FB4D8C07F5A9"
                       }
                     }
                   },
@@ -392,7 +392,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Recoveryconsole.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "F3DE0B0DF80E3E447060FF1C06078D53BE4088AF72B3D9DC1777FB4D8C07F5A9"
                       }
                     }
                   }
@@ -405,7 +405,3 @@
     }
   }
 }
-
-
-
-

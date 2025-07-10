@@ -49,7 +49,7 @@
           "AccountsGuestAccountStatus": "Accounts: Guest account status;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Accounts.zip",
-        "contentHash": "F4D16AA1DF0C513EE52DBFB1BBA796228B74118318589B8A77D7CC037BB825DD"
+        "contentHash": "73FC35E3B28E3DBF8099DB92F7F9F0798456B79A9B22CD005EA37CB162570A26"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - Accounts' for limiting local account use of blank passwords and guest account status. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

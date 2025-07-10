@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_System.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "8DFC096EF3B7675243ED231ED097A57125DFAECF9F2FE24A56CB57A784624302"
       }
     },
     "version": "1.0.0",
@@ -39,7 +39,12 @@
           "displayName": "Audit Other System Events",
           "description": "Specifies whether audit events are generated for Windows Firewall Service and Windows Firewall driver start and stop events, failure events for these services and Windows Firewall Service policy processing failures."
         },
-        "allowedValues": ["No Auditing", "Success", "Failure", "Success and Failure"],
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
         "defaultValue": "No Auditing"
       },
       "assignmentType": {
@@ -303,7 +308,7 @@
                 "AuditOtherSystemEvents": {
                   "value": "[parameters('AuditOtherSystemEvents')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -326,7 +331,7 @@
                   "AuditOtherSystemEvents": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -349,7 +354,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_System.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "8DFC096EF3B7675243ED231ED097A57125DFAECF9F2FE24A56CB57A784624302"
                       }
                     }
                   },
@@ -371,7 +376,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_System.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "8DFC096EF3B7675243ED231ED097A57125DFAECF9F2FE24A56CB57A784624302"
                       }
                     }
                   },
@@ -393,7 +398,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_System.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "8DFC096EF3B7675243ED231ED097A57125DFAECF9F2FE24A56CB57A784624302"
                       }
                     }
                   }
@@ -406,7 +411,3 @@
     }
   }
 }
-
-
-
-

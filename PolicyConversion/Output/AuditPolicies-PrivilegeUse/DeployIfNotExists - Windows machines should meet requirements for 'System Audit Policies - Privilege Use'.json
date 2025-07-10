@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_PrivilegeUse.zip",
-        "contentHash": "E9839F7F80945137536FC7618B1125EE89F5F07902AB799EA191F619FB8BE86E"
+        "contentHash": "03A8E97B360F77E2C413CE0BEB52538220B2A01979AFBF48ED5221A86A2922C6"
       }
     },
     "version": "1.0.0",
@@ -329,7 +329,7 @@
                         "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_PrivilegeUse.zip",
-                        "contentHash": "E9839F7F80945137536FC7618B1125EE89F5F07902AB799EA191F619FB8BE86E"
+                        "contentHash": "03A8E97B360F77E2C413CE0BEB52538220B2A01979AFBF48ED5221A86A2922C6"
                       }
                     }
                   },
@@ -346,7 +346,7 @@
                         "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_PrivilegeUse.zip",
-                        "contentHash": "E9839F7F80945137536FC7618B1125EE89F5F07902AB799EA191F619FB8BE86E"
+                        "contentHash": "03A8E97B360F77E2C413CE0BEB52538220B2A01979AFBF48ED5221A86A2922C6"
                       }
                     }
                   },
@@ -363,7 +363,7 @@
                         "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_PrivilegeUse.zip",
-                        "contentHash": "E9839F7F80945137536FC7618B1125EE89F5F07902AB799EA191F619FB8BE86E"
+                        "contentHash": "03A8E97B360F77E2C413CE0BEB52538220B2A01979AFBF48ED5221A86A2922C6"
                       }
                     }
                   }
@@ -376,5 +376,3 @@
     }
   }
 }
-
-

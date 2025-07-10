@@ -38,7 +38,7 @@
         "name": "AzureBaseline_SystemAuditPoliciesAccountManagement",
         "version": "1.*",
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_AccountManagement.zip",
-        "contentHash": "F454F90D958B7C18C07F80761BB1E0B21EB66693231A7A63A8542C1E0F934C82"
+        "contentHash": "ADB318346BF7D67ECFC1D43D5FCAC962249BE076CB977C32D87DEA6C79D92A31"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'System Audit Policies - Account Management' for auditing application, security, and user group management, and other management events. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

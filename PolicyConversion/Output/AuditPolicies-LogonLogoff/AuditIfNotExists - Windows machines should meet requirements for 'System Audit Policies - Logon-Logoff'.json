@@ -55,7 +55,7 @@
           "AuditGroupMembership": "Audit Group Membership;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_LogonLogoff.zip",
-        "contentHash": "2EA4BF996FB3D1ABBB1BE4A85AFE39AE2D4285948328D18F4A3BB13062E92A04"
+        "contentHash": "BC5E7257E7600B99BA7C5ABD683D17C4B208671360ACFFC22A9F36562C371643"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'System Audit Policies - Logon-Logoff' for auditing IPSec, network policy, claims, account lockout, group membership, and logon/logoff events. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

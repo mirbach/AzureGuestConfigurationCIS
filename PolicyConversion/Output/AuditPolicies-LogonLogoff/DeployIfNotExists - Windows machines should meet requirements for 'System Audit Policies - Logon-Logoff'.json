@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_LogonLogoff.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "BC5E7257E7600B99BA7C5ABD683D17C4B208671360ACFFC22A9F36562C371643"
       }
     },
     "version": "1.0.0",
@@ -39,7 +39,12 @@
           "displayName": "Audit Group Membership",
           "description": "Specifies whether audit events are generated when group memberships are enumerated on the client computer."
         },
-        "allowedValues": ["No Auditing", "Success", "Failure", "Success and Failure"],
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
         "defaultValue": "Success"
       },
       "assignmentType": {
@@ -303,7 +308,7 @@
                 "AuditGroupMembership": {
                   "value": "[parameters('AuditGroupMembership')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -326,7 +331,7 @@
                   "AuditGroupMembership": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -349,7 +354,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_LogonLogoff.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "BC5E7257E7600B99BA7C5ABD683D17C4B208671360ACFFC22A9F36562C371643"
                       }
                     }
                   },
@@ -371,7 +376,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_LogonLogoff.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "BC5E7257E7600B99BA7C5ABD683D17C4B208671360ACFFC22A9F36562C371643"
                       }
                     }
                   },
@@ -393,7 +398,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_LogonLogoff.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "BC5E7257E7600B99BA7C5ABD683D17C4B208671360ACFFC22A9F36562C371643"
                       }
                     }
                   }
@@ -406,7 +411,3 @@
     }
   }
 }
-
-
-
-

@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Shutdown.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "E041F3482F74D64818C50559841AAD654590A80B744C72A8AF243B73F3E633B2"
       }
     },
     "version": "1.0.0",
@@ -313,7 +313,7 @@
                 "ShutdownClearVirtualMemoryPagefile": {
                   "value": "[parameters('ShutdownClearVirtualMemoryPagefile')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -339,7 +339,7 @@
                   "ShutdownClearVirtualMemoryPagefile": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -366,7 +366,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Shutdown.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E041F3482F74D64818C50559841AAD654590A80B744C72A8AF243B73F3E633B2"
                       }
                     }
                   },
@@ -392,7 +392,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Shutdown.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E041F3482F74D64818C50559841AAD654590A80B744C72A8AF243B73F3E633B2"
                       }
                     }
                   },
@@ -418,7 +418,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Shutdown.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E041F3482F74D64818C50559841AAD654590A80B744C72A8AF243B73F3E633B2"
                       }
                     }
                   }
@@ -431,7 +431,3 @@
     }
   }
 }
-
-
-
-

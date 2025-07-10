@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "74889B15ED9AB82C188FB644C414C633E49A02ED1946F31055E75B07F5771B13"
       }
     },
     "version": "1.0.0",
@@ -511,7 +511,7 @@
                 "SpecifyTheIntervalToCheckForDefinitionUpdates": {
                   "value": "['8']"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -591,7 +591,7 @@
                   "SpecifyTheIntervalToCheckForDefinitionUpdates": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -690,7 +690,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "74889B15ED9AB82C188FB644C414C633E49A02ED1946F31055E75B07F5771B13"
                       }
                     }
                   },
@@ -788,7 +788,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "74889B15ED9AB82C188FB644C414C633E49A02ED1946F31055E75B07F5771B13"
                       }
                     }
                   },
@@ -886,7 +886,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "74889B15ED9AB82C188FB644C414C633E49A02ED1946F31055E75B07F5771B13"
                       }
                     }
                   }
@@ -899,9 +899,3 @@
     }
   }
 }
-
-
-
-
-
-

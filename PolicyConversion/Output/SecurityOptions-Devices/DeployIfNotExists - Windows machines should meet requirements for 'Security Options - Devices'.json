@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Devices.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "81235710092B42B7F13BCA32CF350756D32237F3B75F85A9CC135A5C0EBFD016"
       }
     },
     "version": "1.0.0",
@@ -302,7 +302,7 @@
                 "DevicesAllowedToFormatAndEjectRemovableMedia": {
                   "value": "[parameters('DevicesAllowedToFormatAndEjectRemovableMedia')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -325,7 +325,7 @@
                   "DevicesAllowedToFormatAndEjectRemovableMedia": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -348,7 +348,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Devices.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "81235710092B42B7F13BCA32CF350756D32237F3B75F85A9CC135A5C0EBFD016"
                       }
                     }
                   },
@@ -370,7 +370,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Devices.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "81235710092B42B7F13BCA32CF350756D32237F3B75F85A9CC135A5C0EBFD016"
                       }
                     }
                   },
@@ -392,7 +392,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Devices.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "81235710092B42B7F13BCA32CF350756D32237F3B75F85A9CC135A5C0EBFD016"
                       }
                     }
                   }
@@ -405,7 +405,3 @@
     }
   }
 }
-
-
-
-

@@ -49,7 +49,7 @@
           "SystemSettingsUseCertificateRulesOnWindowsExecutablesForSoftwareRestrictionPolicies": "System settings: Use Certificate Rules on Windows Executables for Software Restriction Policies;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Systemsettings.zip",
-        "contentHash": "489542BC689CC7216A0F1273FE682704F0E093C9CE331D1ADD8A0C5E6DF98968"
+        "contentHash": "D6DADB6A683EF6AAD229637F980ADEB50C21E87472E4CD7C6241EF7346CC33EA"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - System settings' for certificate rules on executables for SRP and optional subsystems. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

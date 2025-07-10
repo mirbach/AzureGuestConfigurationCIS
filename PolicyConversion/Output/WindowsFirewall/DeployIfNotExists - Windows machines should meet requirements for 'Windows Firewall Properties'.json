@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "E7EB09F105ABDBC919B46A0D98F62EA3B39C4E411E9E304EACD78252A8EF3AB4"
       }
     },
     "version": "1.0.0",
@@ -489,7 +489,7 @@
                 "WindowsFirewallPublicAllowUnicastResponse": {
                   "value": "['1']"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -563,7 +563,7 @@
                   "WindowsFirewallPublicAllowUnicastResponse": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -654,7 +654,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E7EB09F105ABDBC919B46A0D98F62EA3B39C4E411E9E304EACD78252A8EF3AB4"
                       }
                     }
                   },
@@ -744,7 +744,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E7EB09F105ABDBC919B46A0D98F62EA3B39C4E411E9E304EACD78252A8EF3AB4"
                       }
                     }
                   },
@@ -834,7 +834,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E7EB09F105ABDBC919B46A0D98F62EA3B39C4E411E9E304EACD78252A8EF3AB4"
                       }
                     }
                   }
@@ -847,8 +847,3 @@
     }
   }
 }
-
-
-
-
-

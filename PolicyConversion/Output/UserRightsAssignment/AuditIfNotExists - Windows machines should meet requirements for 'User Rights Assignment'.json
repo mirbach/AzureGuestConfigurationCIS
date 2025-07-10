@@ -193,7 +193,7 @@
           "UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects": "Take ownership of files or other objects;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
-        "contentHash": "061FD244F54FAF35D58A371D254D9081692639F2C66420FC41507AE08F71C4AB"
+        "contentHash": "7C5F0B580587F1281FCC75E9618904CEAF5CF18C845ABF5875A23FE0A108242D"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'User Rights Assignment' for allowing log on locally, RDP, access from the network, and many other user activities. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

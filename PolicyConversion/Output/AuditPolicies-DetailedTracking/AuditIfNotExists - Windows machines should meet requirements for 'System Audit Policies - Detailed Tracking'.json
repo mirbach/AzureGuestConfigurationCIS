@@ -55,7 +55,7 @@
           "AuditProcessTermination": "Audit Process Termination;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_DetailedTracking.zip",
-        "contentHash": "0506F01B808B1DE6551DCF3DDD564ADDD115D0987D48518C85C4197ADE6A8176"
+        "contentHash": "69B27E51B054E74BE46A9D9DC244379DA53BF07C2F5703E07DE391E97D396D39"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'System Audit Policies - Detailed Tracking' for auditing DPAPI, process creation/termination, RPC events, and PNP activity. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

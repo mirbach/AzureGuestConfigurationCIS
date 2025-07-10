@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkAccess.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "E2961799EC5695DB46C7238B1E24B1BE2A079D0D3E715642A8229638968E6E5D"
       }
     },
     "version": "1.0.0",
@@ -324,7 +324,7 @@
                 "NetworkAccessSharesThatCanBeAccessedAnonymously": {
                   "value": "[parameters('NetworkAccessSharesThatCanBeAccessedAnonymously')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -353,7 +353,7 @@
                   "NetworkAccessSharesThatCanBeAccessedAnonymously": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -384,7 +384,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkAccess.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E2961799EC5695DB46C7238B1E24B1BE2A079D0D3E715642A8229638968E6E5D"
                       }
                     }
                   },
@@ -414,7 +414,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkAccess.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E2961799EC5695DB46C7238B1E24B1BE2A079D0D3E715642A8229638968E6E5D"
                       }
                     }
                   },
@@ -444,7 +444,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkAccess.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "E2961799EC5695DB46C7238B1E24B1BE2A079D0D3E715642A8229638968E6E5D"
                       }
                     }
                   }
@@ -457,7 +457,3 @@
     }
   }
 }
-
-
-
-

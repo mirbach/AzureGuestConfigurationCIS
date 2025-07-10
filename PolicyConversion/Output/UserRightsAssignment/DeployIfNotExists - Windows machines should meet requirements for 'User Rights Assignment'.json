@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "7C5F0B580587F1281FCC75E9618904CEAF5CF18C845ABF5875A23FE0A108242D"
       }
     },
     "version": "1.0.0",
@@ -478,7 +478,7 @@
                 "UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects": {
                   "value": "[parameters('UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -549,7 +549,7 @@
                   "UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -636,7 +636,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "7C5F0B580587F1281FCC75E9618904CEAF5CF18C845ABF5875A23FE0A108242D"
                       }
                     }
                   },
@@ -722,7 +722,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "7C5F0B580587F1281FCC75E9618904CEAF5CF18C845ABF5875A23FE0A108242D"
                       }
                     }
                   },
@@ -808,7 +808,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "7C5F0B580587F1281FCC75E9618904CEAF5CF18C845ABF5875A23FE0A108242D"
                       }
                     }
                   }
@@ -821,7 +821,3 @@
     }
   }
 }
-
-
-
-

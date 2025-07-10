@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Systemsettings.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "D6DADB6A683EF6AAD229637F980ADEB50C21E87472E4CD7C6241EF7346CC33EA"
       }
     },
     "version": "1.0.0",
@@ -302,7 +302,7 @@
                 "SystemSettingsUseCertificateRulesOnWindowsExecutablesForSoftwareRestrictionPolicies": {
                   "value": "[parameters('SystemSettingsUseCertificateRulesOnWindowsExecutablesForSoftwareRestrictionPolicies')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -325,7 +325,7 @@
                   "SystemSettingsUseCertificateRulesOnWindowsExecutablesForSoftwareRestrictionPolicies": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -348,7 +348,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Systemsettings.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "D6DADB6A683EF6AAD229637F980ADEB50C21E87472E4CD7C6241EF7346CC33EA"
                       }
                     }
                   },
@@ -370,7 +370,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Systemsettings.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "D6DADB6A683EF6AAD229637F980ADEB50C21E87472E4CD7C6241EF7346CC33EA"
                       }
                     }
                   },
@@ -392,7 +392,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Systemsettings.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "D6DADB6A683EF6AAD229637F980ADEB50C21E87472E4CD7C6241EF7346CC33EA"
                       }
                     }
                   }
@@ -405,7 +405,3 @@
     }
   }
 }
-
-
-
-

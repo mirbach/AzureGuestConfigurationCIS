@@ -202,7 +202,7 @@
           "WindowsFirewallPublicAllowUnicastResponse": "Windows Firewall: Public: Allow unicast response;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
-        "contentHash": "4BD65C9C739BA2EA6707777FAF89E8D010C6858872DFAAEC2C8364530DC61B4F"
+        "contentHash": "E7EB09F105ABDBC919B46A0D98F62EA3B39C4E411E9E304EACD78252A8EF3AB4"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Windows Firewall Properties' for firewall state, connections, rule management, and notifications. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",
@@ -431,4 +431,3 @@
     "policyType": "BuiltIn"
   }
 }
-

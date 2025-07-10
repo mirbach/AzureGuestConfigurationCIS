@@ -38,7 +38,7 @@
         "name": "AzureBaseline_SystemAuditPoliciesPrivilegeUse",
         "version": "1.*",
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_PrivilegeUse.zip",
-        "contentHash": "E9839F7F80945137536FC7618B1125EE89F5F07902AB799EA191F619FB8BE86E"
+        "contentHash": "03A8E97B360F77E2C413CE0BEB52538220B2A01979AFBF48ED5221A86A2922C6"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'System Audit Policies - Privilege Use' for auditing nonsensitive and other privilege use. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

@@ -38,7 +38,7 @@
         "name": "AzureBaseline_SecurityOptionsSystemobjects",
         "version": "1.*",
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Systemobjects.zip",
-        "contentHash": "AA9A2A5F8D415ABBC8A8EB282594B4EDCCE83EF4ADCAFBCD8A70E26A5823C63E"
+        "contentHash": "81E3E6E32ECD9B82052E9F979D93CAD3929BD2821364624BB1E84564E3D3D41F"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - System objects' for case insensitivity for non-Windows subsystems and permissions of internal system objects. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

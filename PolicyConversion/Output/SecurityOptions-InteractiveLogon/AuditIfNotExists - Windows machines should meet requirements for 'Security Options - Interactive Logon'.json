@@ -38,7 +38,7 @@
         "name": "AzureBaseline_SecurityOptionsInteractiveLogon",
         "version": "1.*",
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_InteractiveLogon.zip",
-        "contentHash": "D8E8215805E47D172C1B70A1F764F849C36885D9ADC0AE0BC8A0FB38C3648D6E"
+        "contentHash": "0F01C72B8983B2A6EDB9BF65A7FB1602282A7AF852D819AC40A6156C41349A7D"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - Interactive Logon' for displaying last user name and requiring ctrl-alt-del. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

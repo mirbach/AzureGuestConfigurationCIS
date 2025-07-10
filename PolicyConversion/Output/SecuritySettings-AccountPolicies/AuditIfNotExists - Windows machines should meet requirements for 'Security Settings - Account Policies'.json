@@ -85,7 +85,7 @@
           "PasswordMustMeetComplexityRequirements": "Password must meet complexity requirements;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecuritySettings_AccountPolicies.zip",
-        "contentHash": "418F4CA09058E78D01C0CD62605E3978132B62BC679E4D5FF8BEFDC61B5CA6A9"
+        "contentHash": "3F56B96AD7C1FA10CC6E5A0CCED7C909979DC3A7E6E2EC22918B581BA6DBE6A3"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Settings - Account Policies' for password history, age, length, complexity, and storing passwords using reversible encryption. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

@@ -14,8 +14,8 @@
         "name": "AzureBaseline_SecurityOptionsNetworkSecurity",
         "version": "1.0.0.0",
         "configurationParameter": {},
-        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsNetworkSecurity.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkSecurity.zip",
+        "contentHash": "0C5675F5E7101474E77A1C307FF191F4264B6A326FFAECCA6471B5B6AC1D8D42"
       }
     },
     "version": "1.0.0",
@@ -346,7 +346,7 @@
                 "NetworkSecurityMinimumSessionSecurityForNTLMSSPBasedIncludingSecureRPCServers": {
                   "value": "[parameters('NetworkSecurityMinimumSessionSecurityForNTLMSSPBasedIncludingSecureRPCServers')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -381,7 +381,7 @@
                   "NetworkSecurityMinimumSessionSecurityForNTLMSSPBasedIncludingSecureRPCServers": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -419,8 +419,8 @@
                             "value": "[parameters('NetworkSecurityMinimumSessionSecurityForNTLMSSPBasedIncludingSecureRPCServers')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsNetworkSecurity.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkSecurity.zip",
+                        "contentHash": "0C5675F5E7101474E77A1C307FF191F4264B6A326FFAECCA6471B5B6AC1D8D42"
                       }
                     }
                   },
@@ -457,8 +457,8 @@
                             "value": "[parameters('NetworkSecurityMinimumSessionSecurityForNTLMSSPBasedIncludingSecureRPCServers')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsNetworkSecurity.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkSecurity.zip",
+                        "contentHash": "0C5675F5E7101474E77A1C307FF191F4264B6A326FFAECCA6471B5B6AC1D8D42"
                       }
                     }
                   },
@@ -495,8 +495,8 @@
                             "value": "[parameters('NetworkSecurityMinimumSessionSecurityForNTLMSSPBasedIncludingSecureRPCServers')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsNetworkSecurity.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_NetworkSecurity.zip",
+                        "contentHash": "0C5675F5E7101474E77A1C307FF191F4264B6A326FFAECCA6471B5B6AC1D8D42"
                       }
                     }
                   }
@@ -509,7 +509,3 @@
     }
   }
 }
-
-
-
-

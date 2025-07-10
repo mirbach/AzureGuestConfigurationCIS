@@ -14,8 +14,8 @@
         "name": "AzureBaseline_SecurityOptionsAudit",
         "version": "1.0.0.0",
         "configurationParameter": {},
-        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAudit.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Audit.zip",
+        "contentHash": "BCB697741197DFDA2998186335E17A397B29784927DAB02D7C98B193872508B5"
       }
     },
     "version": "1.0.0",
@@ -302,7 +302,7 @@
                 "AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits": {
                   "value": "[parameters('AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -325,7 +325,7 @@
                   "AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -347,8 +347,8 @@
                             "value": "[parameters('AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAudit.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Audit.zip",
+                        "contentHash": "BCB697741197DFDA2998186335E17A397B29784927DAB02D7C98B193872508B5"
                       }
                     }
                   },
@@ -369,8 +369,8 @@
                             "value": "[parameters('AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAudit.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Audit.zip",
+                        "contentHash": "BCB697741197DFDA2998186335E17A397B29784927DAB02D7C98B193872508B5"
                       }
                     }
                   },
@@ -391,8 +391,8 @@
                             "value": "[parameters('AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits')]"
                           }
                         ],
-                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptionsAudit.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Audit.zip",
+                        "contentHash": "BCB697741197DFDA2998186335E17A397B29784927DAB02D7C98B193872508B5"
                       }
                     }
                   }
@@ -405,7 +405,3 @@
     }
   }
 }
-
-
-
-

@@ -76,7 +76,7 @@
           "TurnOnConveniencePINSignin": "Turn on convenience PIN sign-in;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_System.zip",
-        "contentHash": "E302B851858CCBA5764317510E4D60C5BFDCA81FF19C10C89AE96271553FAF6B"
+        "contentHash": "330BF54C47B265E3CC1DE5176DEBD83CA1D32C835A186EB4BB7F1101556CB36F"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Administrative Templates - System' for settings that control the administrative experience and Remote Assistance. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

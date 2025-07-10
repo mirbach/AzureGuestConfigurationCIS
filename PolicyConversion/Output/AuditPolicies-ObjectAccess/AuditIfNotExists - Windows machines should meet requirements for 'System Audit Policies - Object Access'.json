@@ -85,7 +85,7 @@
           "AuditFileSystem": "Audit File System;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_ObjectAccess.zip",
-        "contentHash": "AB87759F3415E88BAD228E8134B82D9F8940699FDF0767C2D79424E00396BB12"
+        "contentHash": "C15437501A3D8655A2EE9775630853825F37751E537BEC8FC740A7DE2721D268"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'System Audit Policies - Object Access' for auditing file, registry, SAM, storage, filtering, kernel, and other system types. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

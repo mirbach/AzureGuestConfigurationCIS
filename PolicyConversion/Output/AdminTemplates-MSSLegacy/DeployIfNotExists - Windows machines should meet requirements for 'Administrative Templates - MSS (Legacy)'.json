@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_MSSLegacy.zip",
-        "contentHash": "C75718E1B00A54C35C09C15B4CF6345AEA7AB273AE99DCF8DC1A53E6314ED91F"
+        "contentHash": "664442CDAD5562B54D7356D39482FA78B4E4EBB27E736C4C8DFA380A31097523"
       }
     },
     "version": "1.0.0",
@@ -329,7 +329,7 @@
                         "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_MSSLegacy.zip",
-                        "contentHash": "C75718E1B00A54C35C09C15B4CF6345AEA7AB273AE99DCF8DC1A53E6314ED91F"
+                        "contentHash": "664442CDAD5562B54D7356D39482FA78B4E4EBB27E736C4C8DFA380A31097523"
                       }
                     }
                   },
@@ -346,7 +346,7 @@
                         "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_MSSLegacy.zip",
-                        "contentHash": "C75718E1B00A54C35C09C15B4CF6345AEA7AB273AE99DCF8DC1A53E6314ED91F"
+                        "contentHash": "664442CDAD5562B54D7356D39482FA78B4E4EBB27E736C4C8DFA380A31097523"
                       }
                     }
                   },
@@ -363,7 +363,7 @@
                         "assignmentType": "[parameters('assignmentType')]",
                         "configurationParameter": [],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_AdministrativeTemplates_MSSLegacy.zip",
-                        "contentHash": "C75718E1B00A54C35C09C15B4CF6345AEA7AB273AE99DCF8DC1A53E6314ED91F"
+                        "contentHash": "664442CDAD5562B54D7356D39482FA78B4E4EBB27E736C4C8DFA380A31097523"
                       }
                     }
                   }
@@ -376,5 +376,3 @@
     }
   }
 }
-
-

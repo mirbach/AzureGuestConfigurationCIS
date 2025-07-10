@@ -49,7 +49,7 @@
           "AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits": "Audit: Shut down system immediately if unable to log security audits;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Audit.zip",
-        "contentHash": "6CA6480256B358C25834C98CB551D373910327A3797142229B918BBBCFA2FB85"
+        "contentHash": "BCB697741197DFDA2998186335E17A397B29784927DAB02D7C98B193872508B5"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - Audit' for forcing audit policy subcategory and shutting down if unable to log security audits. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

@@ -15,7 +15,7 @@
         "version": "1.0.0.0",
         "configurationParameter": {},
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_DetailedTracking.zip",
-        "contentHash": "PLACEHOLDER_HASH"
+        "contentHash": "69B27E51B054E74BE46A9D9DC244379DA53BF07C2F5703E07DE391E97D396D39"
       }
     },
     "version": "1.0.0",
@@ -39,7 +39,12 @@
           "displayName": "Audit Process Termination",
           "description": "Specifies whether audit events are generated when a process has exited. Recommended for monitoring termination of critical processes."
         },
-        "allowedValues": ["No Auditing", "Success", "Failure", "Success and Failure"],
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
         "defaultValue": "No Auditing"
       },
       "assignmentType": {
@@ -303,7 +308,7 @@
                 "AuditProcessTermination": {
                   "value": "[parameters('AuditProcessTermination')]"
                 },
-      "assignmentType": {
+                "assignmentType": {
                   "value": "[parameters('assignmentType')]"
                 }
               },
@@ -326,7 +331,7 @@
                   "AuditProcessTermination": {
                     "type": "string"
                   },
-      "assignmentType": {
+                  "assignmentType": {
                     "type": "string"
                   }
                 },
@@ -349,7 +354,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_DetailedTracking.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "69B27E51B054E74BE46A9D9DC244379DA53BF07C2F5703E07DE391E97D396D39"
                       }
                     }
                   },
@@ -371,7 +376,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_DetailedTracking.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "69B27E51B054E74BE46A9D9DC244379DA53BF07C2F5703E07DE391E97D396D39"
                       }
                     }
                   },
@@ -393,7 +398,7 @@
                           }
                         ],
                         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPolicies_DetailedTracking.zip",
-                        "contentHash": "PLACEHOLDER_HASH"
+                        "contentHash": "69B27E51B054E74BE46A9D9DC244379DA53BF07C2F5703E07DE391E97D396D39"
                       }
                     }
                   }
@@ -406,7 +411,3 @@
     }
   }
 }
-
-
-
-

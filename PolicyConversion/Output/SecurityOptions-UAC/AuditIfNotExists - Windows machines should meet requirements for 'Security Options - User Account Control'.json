@@ -76,7 +76,7 @@
           "UACRunAllAdministratorsInAdminApprovalMode": "User Account Control: Run all administrators in Admin Approval Mode;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_UserAccountControl.zip",
-        "contentHash": "A74DCA82164314B65DCBD14393765C2956579DC1C663F9F0F29C20632F0A4541"
+        "contentHash": "426355CAA620C18EE2827E306C4DD9868BAB58FB23F4CEBD025D0EBA9F944010"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - User Account Control' for mode for admins, behavior of elevation prompt, and virtualizing file and registry write failures. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

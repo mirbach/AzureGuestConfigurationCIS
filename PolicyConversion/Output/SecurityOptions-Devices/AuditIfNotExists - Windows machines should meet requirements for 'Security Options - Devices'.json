@@ -49,7 +49,7 @@
           "DevicesAllowedToFormatAndEjectRemovableMedia": "Devices: Allowed to format and eject removable media;ExpectedValue"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SecurityOptions_Devices.zip",
-        "contentHash": "2D01E0BEFEED47B46B60596D5C8614FFCDF50DE5E39BD67B947D668993A5F22C"
+        "contentHash": "81235710092B42B7F13BCA32CF350756D32237F3B75F85A9CC135A5C0EBFD016"
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Security Options - Devices' for undocking without logging on, installing print drivers, and formatting/ejecting media. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",
