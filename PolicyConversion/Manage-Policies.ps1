@@ -991,6 +991,21 @@ function Invoke-CleanOutput {
         }
     }
     
+    # Step 2d: Remove temporary build artifact directories (-Deploy, -Force)
+    Write-Status "  Removing temporary build artifact directories..." "Gray"
+    $buildArtifactDirs = Get-ChildItem $scriptPath -Recurse -Directory -ErrorAction SilentlyContinue | Where-Object {$_.Name -eq "-Deploy" -or $_.Name -eq "-Force"}
+    foreach ($artifactDir in $buildArtifactDirs) {
+        try {
+            $artifactSize = (Get-ChildItem $artifactDir.FullName -Recurse -File -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
+            $bytesFreed += $artifactSize
+            Remove-Item $artifactDir.FullName -Recurse -Force -ErrorAction SilentlyContinue
+            Write-Status "    Removed build artifact: $($artifactDir.Parent.Name)\$($artifactDir.Name)" "Gray"
+        }
+        catch {
+            Write-Status "    Warning: Could not remove build artifact: $($_.Exception.Message)" "Yellow"
+        }
+    }
+    
     # Define patterns and specific files to clean up
     $cleanupPatterns = @(
         # Development/debugging scripts - these were used during development but not needed for production
