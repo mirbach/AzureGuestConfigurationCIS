@@ -1,0 +1,827 @@
+{
+  "properties": {
+    "displayName": "[GG Serverhardening] [DeployIfNotExists] Windows machines should meet requirements for 'User Rights Assignment'",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Deploys Guest Configuration assignment to Windows machines to configure Windows machines should have the specified Group Policy settings in the category 'User Rights Assignment' for allowing log on locally, RDP, access from the network, and many other user activities. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",
+    "metadata": {
+      "category": "Guest Configuration",
+      "version": "1.0.0",
+      "requiredProviders": [
+        "Microsoft.GuestConfiguration"
+      ],
+      "guestConfiguration": {
+        "name": "AzureBaseline_UserRightsAssignment",
+        "version": "1.0.0.0",
+        "configurationParameter": {},
+        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
+        "contentHash": "PLACEHOLDER_HASH"
+      }
+    },
+    "version": "1.0.0",
+    "parameters": {
+      "IncludeArcMachines": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Include Arc connected servers",
+          "description": "By selecting this option, you agree to be charged monthly per Arc connected machine.",
+          "portalReview": "true"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "UsersOrGroupsThatMayAccessThisComputerFromTheNetwork": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may access this computer from the network",
+          "description": "Specifies which remote users on the network are permitted to connect to the computer. This does not include Remote Desktop Connection."
+        },
+        "defaultValue": "Administrators, Authenticated Users"
+      },
+      "UsersOrGroupsThatMayLogOnLocally": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may log on locally",
+          "description": "Specifies which users or groups can interactively log on to the computer. Users who attempt to log on via Remote Desktop Connection or IIS also require this user right."
+        },
+        "defaultValue": "Administrators"
+      },
+      "UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may log on through Remote Desktop Services",
+          "description": "Specifies which users or groups are permitted to log on as a Terminal Services client, Remote Desktop, or for Remote Assistance."
+        },
+        "defaultValue": "Administrators, Remote Desktop Users"
+      },
+      "UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that are denied access to this computer from the network",
+          "description": "Specifies which users or groups are explicitly prohibited from connecting to the computer across the network."
+        },
+        "defaultValue": "Guests"
+      },
+      "UsersOrGroupsThatMayManageAuditingAndSecurityLog": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may manage auditing and security log",
+          "description": "Specifies users and groups permitted to change the auditing options for files and directories and clear the Security log."
+        },
+        "defaultValue": "Administrators"
+      },
+      "UsersOrGroupsThatMayBackUpFilesAndDirectories": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may back up files and directories",
+          "description": "Specifies users and groups allowed to circumvent file and directory permissions to back up the system."
+        },
+        "defaultValue": "Administrators, Backup Operators"
+      },
+      "UsersOrGroupsThatMayChangeTheSystemTime": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may change the system time",
+          "description": "Specifies which users and groups are permitted to change the time and date on the internal clock of the computer."
+        },
+        "defaultValue": "Administrators, LOCAL SERVICE"
+      },
+      "UsersOrGroupsThatMayChangeTheTimeZone": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may change the time zone",
+          "description": "Specifies which users and groups are permitted to change the time zone of the computer."
+        },
+        "defaultValue": "Administrators, LOCAL SERVICE"
+      },
+      "UsersOrGroupsThatMayCreateATokenObject": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may create a token object",
+          "description": "Specifies which users and groups are permitted to create an access token, which may provide elevated rights to access sensitive data."
+        },
+        "defaultValue": "No One"
+      },
+      "UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that are denied logging on as a batch job",
+          "description": "Specifies which users and groups are explicitly not permitted to log on to the computer as a batch job (i.e. scheduled task)."
+        },
+        "defaultValue": "Guests"
+      },
+      "UsersAndGroupsThatAreDeniedLoggingOnAsAService": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that are denied logging on as a service",
+          "description": "Specifies which service accounts are explicitly not permitted to register a process as a service."
+        },
+        "defaultValue": "Guests"
+      },
+      "UsersAndGroupsThatAreDeniedLocalLogon": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that are denied local logon",
+          "description": "Specifies which users and groups are explicitly not permitted to log on to the computer."
+        },
+        "defaultValue": "Guests"
+      },
+      "UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that are denied log on through Remote Desktop Services",
+          "description": "Specifies which users and groups are explicitly not permitted to log on to the computer via Terminal Services/Remote Desktop Client."
+        },
+        "defaultValue": "Guests"
+      },
+      "UserAndGroupsThatMayForceShutdownFromARemoteSystem": {
+        "type": "String",
+        "metadata": {
+          "displayName": "User and groups that may force shutdown from a remote system",
+          "description": "Specifies which users and groups are permitted to shut down the computer from a remote location on the network."
+        },
+        "defaultValue": "Administrators"
+      },
+      "UsersAndGroupsThatMayRestoreFilesAndDirectories": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that may restore files and directories",
+          "description": "Specifies which users and groups are permitted to bypass file, directory, registry, and other persistent object permissions when restoring backed up files and directories."
+        },
+        "defaultValue": "Administrators, Backup Operators"
+      },
+      "UsersAndGroupsThatMayShutDownTheSystem": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users and groups that may shut down the system",
+          "description": "Specifies which users and groups who are logged on locally to the computers in your environment are permitted to shut down the operating system with the Shut Down command."
+        },
+        "defaultValue": "Administrators"
+      },
+      "UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Users or groups that may take ownership of files or other objects",
+          "description": "Specifies which users and groups are permitted to take ownership of files, folders, registry keys, processes, or threads. This user right bypasses any permissions that are in place to protect objects to give ownership to the specified user."
+        },
+        "defaultValue": "Administrators"
+      },
+      "assignmentType": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Assignment Type",
+          "description": "Defines how the guest configuration assignment should behave: Audit (check compliance only), ApplyAndMonitor (apply once and monitor), or ApplyAndAutoCorrect (apply and auto-correct drift)"
+        },
+        "allowedValues": [
+          "Audit",
+          "ApplyAndMonitor",
+          "ApplyAndAutoCorrect"
+        ],
+        "defaultValue": "ApplyAndMonitor"
+      },
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of this policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          {
+            "allOf": [
+              {
+                "field": "type",
+                "equals": "Microsoft.Compute/virtualMachines"
+              },
+              {
+                "anyOf": [
+                  {
+                    "field": "Microsoft.Compute/imagePublisher",
+                    "in": [
+                      "esri",
+                      "incredibuild",
+                      "MicrosoftDynamicsAX",
+                      "MicrosoftSharepoint",
+                      "MicrosoftVisualStudio",
+                      "MicrosoftWindowsDesktop",
+                      "MicrosoftWindowsServerHPCPack"
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "MicrosoftWindowsServer"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageSKU",
+                        "notLike": "2008*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "MicrosoftSQLServer"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "notLike": "SQL2008*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "microsoft-dsvm"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "dsvm-win*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "microsoft-ads"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "in": [
+                          "standard-data-science-vm",
+                          "windows-data-science-vm"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "batch"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "equals": "rendering-windows2016"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "center-for-internet-security-inc"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "cis-windows-server-201*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "pivotal"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "bosh-windows-server*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "cloud-infrastructure-services"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "ad*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "field": "Microsoft.Compute/virtualMachines/osProfile.windowsConfiguration",
+                            "exists": "true"
+                          },
+                          {
+                            "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.osType",
+                            "like": "Windows*"
+                          }
+                        ]
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "field": "Microsoft.Compute/imageSKU",
+                            "exists": "false"
+                          },
+                          {
+                            "allOf": [
+                              {
+                                "field": "Microsoft.Compute/imageSKU",
+                                "notLike": "2008*"
+                              },
+                              {
+                                "field": "Microsoft.Compute/imageOffer",
+                                "notLike": "SQL2008*"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "value": "[parameters('IncludeArcMachines')]",
+                "equals": "true"
+              },
+              {
+                "anyOf": [
+                  {
+                    "allOf": [
+                      {
+                        "field": "type",
+                        "equals": "Microsoft.HybridCompute/machines"
+                      },
+                      {
+                        "field": "Microsoft.HybridCompute/imageOffer",
+                        "like": "windows*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "type",
+                        "equals": "Microsoft.ConnectedVMwarevSphere/virtualMachines"
+                      },
+                      {
+                        "field": "Microsoft.ConnectedVMwarevSphere/virtualMachines/osProfile.osType",
+                        "like": "windows*"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+          "name": "AzureBaseline_UserRightsAssignment",
+          "roleDefinitionIds": [
+            "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.GuestConfiguration/guestConfigurationAssignments/parameterHash",
+                "equals": "[base64(concat('[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayAccessThisComputerFromTheNetwork'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayLogOnLocally'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayManageAuditingAndSecurityLog'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayBackUpFilesAndDirectories'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayChangeTheSystemTime'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayChangeTheTimeZone'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayCreateATokenObject'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatAreDeniedLoggingOnAsAService'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatAreDeniedLocalLogon'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UserAndGroupsThatMayForceShutdownFromARemoteSystem'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatMayRestoreFilesAndDirectories'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersAndGroupsThatMayShutDownTheSystem'), ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects')))]"
+              }
+            ]
+          },
+          "deployment": {
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "vmName": {
+                  "value": "[field('name')]"
+                },
+                "location": {
+                  "value": "[field('location')]"
+                },
+                "type": {
+                  "value": "[field('type')]"
+                },
+                "configurationName": {
+                  "value": "AzureBaseline_UserRightsAssignment"
+                },
+                "UsersOrGroupsThatMayAccessThisComputerFromTheNetwork": {
+                  "value": "[parameters('UsersOrGroupsThatMayAccessThisComputerFromTheNetwork')]"
+                },
+                "UsersOrGroupsThatMayLogOnLocally": {
+                  "value": "[parameters('UsersOrGroupsThatMayLogOnLocally')]"
+                },
+                "UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices": {
+                  "value": "[parameters('UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices')]"
+                },
+                "UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork": {
+                  "value": "[parameters('UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork')]"
+                },
+                "UsersOrGroupsThatMayManageAuditingAndSecurityLog": {
+                  "value": "[parameters('UsersOrGroupsThatMayManageAuditingAndSecurityLog')]"
+                },
+                "UsersOrGroupsThatMayBackUpFilesAndDirectories": {
+                  "value": "[parameters('UsersOrGroupsThatMayBackUpFilesAndDirectories')]"
+                },
+                "UsersOrGroupsThatMayChangeTheSystemTime": {
+                  "value": "[parameters('UsersOrGroupsThatMayChangeTheSystemTime')]"
+                },
+                "UsersOrGroupsThatMayChangeTheTimeZone": {
+                  "value": "[parameters('UsersOrGroupsThatMayChangeTheTimeZone')]"
+                },
+                "UsersOrGroupsThatMayCreateATokenObject": {
+                  "value": "[parameters('UsersOrGroupsThatMayCreateATokenObject')]"
+                },
+                "UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob": {
+                  "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob')]"
+                },
+                "UsersAndGroupsThatAreDeniedLoggingOnAsAService": {
+                  "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsAService')]"
+                },
+                "UsersAndGroupsThatAreDeniedLocalLogon": {
+                  "value": "[parameters('UsersAndGroupsThatAreDeniedLocalLogon')]"
+                },
+                "UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices": {
+                  "value": "[parameters('UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices')]"
+                },
+                "UserAndGroupsThatMayForceShutdownFromARemoteSystem": {
+                  "value": "[parameters('UserAndGroupsThatMayForceShutdownFromARemoteSystem')]"
+                },
+                "UsersAndGroupsThatMayRestoreFilesAndDirectories": {
+                  "value": "[parameters('UsersAndGroupsThatMayRestoreFilesAndDirectories')]"
+                },
+                "UsersAndGroupsThatMayShutDownTheSystem": {
+                  "value": "[parameters('UsersAndGroupsThatMayShutDownTheSystem')]"
+                },
+                "UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects": {
+                  "value": "[parameters('UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects')]"
+                },
+      "assignmentType": {
+                  "value": "[parameters('assignmentType')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "vmName": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "configurationName": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayAccessThisComputerFromTheNetwork": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayLogOnLocally": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayManageAuditingAndSecurityLog": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayBackUpFilesAndDirectories": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayChangeTheSystemTime": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayChangeTheTimeZone": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayCreateATokenObject": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatAreDeniedLoggingOnAsAService": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatAreDeniedLocalLogon": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices": {
+                    "type": "string"
+                  },
+                  "UserAndGroupsThatMayForceShutdownFromARemoteSystem": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatMayRestoreFilesAndDirectories": {
+                    "type": "string"
+                  },
+                  "UsersAndGroupsThatMayShutDownTheSystem": {
+                    "type": "string"
+                  },
+                  "UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects": {
+                    "type": "string"
+                  },
+      "assignmentType": {
+                    "type": "string"
+                  }
+                },
+                "resources": [
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('microsoft.hybridcompute/machines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.HybridCompute/machines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_UserRightsAssignment')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_UserRightsAssignment']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayAccessThisComputerFromTheNetwork')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayLogOnLocally')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayManageAuditingAndSecurityLog')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayBackUpFilesAndDirectories')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayChangeTheSystemTime')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayChangeTheTimeZone')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayCreateATokenObject')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsAService')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLocalLogon')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UserAndGroupsThatMayForceShutdownFromARemoteSystem')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatMayRestoreFilesAndDirectories')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatMayShutDownTheSystem')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects')]"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  },
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('Microsoft.Compute/virtualMachines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.Compute/virtualMachines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_UserRightsAssignment')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_UserRightsAssignment']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayAccessThisComputerFromTheNetwork')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayLogOnLocally')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayManageAuditingAndSecurityLog')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayBackUpFilesAndDirectories')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayChangeTheSystemTime')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayChangeTheTimeZone')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayCreateATokenObject')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsAService')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLocalLogon')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UserAndGroupsThatMayForceShutdownFromARemoteSystem')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatMayRestoreFilesAndDirectories')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatMayShutDownTheSystem')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects')]"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  },
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('Microsoft.ConnectedVMwarevSphere/virtualMachines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.ConnectedVMwarevSphere/virtualMachines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_UserRightsAssignment')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_UserRightsAssignment']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayAccessThisComputerFromTheNetwork')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayLogOnLocally')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayLogOnThroughRemoteDesktopServices')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedAccessToThisComputerFromTheNetwork')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayManageAuditingAndSecurityLog')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayBackUpFilesAndDirectories')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayChangeTheSystemTime')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayChangeTheTimeZone')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayCreateATokenObject')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsABatchJob')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLoggingOnAsAService')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLocalLogon')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatAreDeniedLogOnThroughRemoteDesktopServices')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UserAndGroupsThatMayForceShutdownFromARemoteSystem')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatMayRestoreFilesAndDirectories')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersAndGroupsThatMayShutDownTheSystem')]"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "[parameters('UsersOrGroupsThatMayTakeOwnershipOfFilesOrOtherObjects')]"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_UserRightsAssignment.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+

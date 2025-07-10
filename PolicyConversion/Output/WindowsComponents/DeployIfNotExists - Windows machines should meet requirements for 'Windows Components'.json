@@ -1,0 +1,907 @@
+{
+  "properties": {
+    "displayName": "[GG Serverhardening] [DeployIfNotExists] Windows machines should meet requirements for 'Windows Components'",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Deploys Guest Configuration assignment to Windows machines to configure Windows machines should have the specified Group Policy settings in the category 'Windows Components' for basic authentication, unencrypted traffic, Microsoft accounts, telemetry, Cortana, and other Windows behaviors. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",
+    "metadata": {
+      "category": "Guest Configuration",
+      "version": "1.0.0",
+      "requiredProviders": [
+        "Microsoft.GuestConfiguration"
+      ],
+      "guestConfiguration": {
+        "name": "AzureBaseline_WindowsComponents",
+        "version": "1.0.0.0",
+        "configurationParameter": {},
+        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
+        "contentHash": "PLACEHOLDER_HASH"
+      }
+    },
+    "version": "1.0.0",
+    "parameters": {
+      "IncludeArcMachines": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Include Arc connected servers",
+          "description": "By selecting this option, you agree to be charged monthly per Arc connected machine.",
+          "portalReview": "true"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "SendFileSamplesWhenFurtherAnalysisIsRequired": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Send file samples when further analysis is required",
+          "description": "Specifies whether and how Windows Defender will submit samples of suspected malware  to Microsoft for further analysis when opt-in for MAPS telemetry is set."
+        },
+        "defaultValue": "1"
+      },
+      "AllowIndexingOfEncryptedFiles": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Allow indexing of encrypted files",
+          "description": "Specifies whether encrypted items are allowed to be indexed."
+        },
+        "defaultValue": "0"
+      },
+      "AllowTelemetry": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Allow Telemetry",
+          "description": "Specifies configuration of the amount of diagnostic and usage data reported to Microsoft. The data is transmitted securely and sensitive data is not sent."
+        },
+        "defaultValue": "2"
+      },
+      "AllowUnencryptedTraffic": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Allow unencrypted traffic",
+          "description": "Specifies whether the Windows Remote Management (WinRM) service sends and receives unencrypted messages over the network."
+        },
+        "defaultValue": "0"
+      },
+      "AlwaysInstallWithElevatedPrivileges": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Always install with elevated privileges",
+          "description": "Specifies whether Windows Installer should use system permissions when it installs any program on the system."
+        },
+        "defaultValue": "0"
+      },
+      "AlwaysPromptForPasswordUponConnection": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Always prompt for password upon connection",
+          "description": "Specifies whether Terminal Services/Remote Desktop Connection always prompts the client computer for a password upon connection."
+        },
+        "defaultValue": "1"
+      },
+      "ApplicationSpecifyTheMaximumLogFileSizeKB": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Application: Specify the maximum log file size (KB)",
+          "description": "Specifies the maximum size for the Application event log in kilobytes."
+        },
+        "defaultValue": "32768"
+      },
+      "AutomaticallySendMemoryDumpsForOSgeneratedErrorReports": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Automatically send memory dumps for OS-generated error reports",
+          "description": "Specifies if memory dumps in support of OS-generated error reports can be sent to Microsoft automatically."
+        },
+        "defaultValue": "1"
+      },
+      "ConfigureDefaultConsent": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Configure Default consent",
+          "description": "Specifies setting of the default consent handling for error reports sent to Microsoft."
+        },
+        "defaultValue": "4"
+      },
+      "ConfigureWindowsSmartScreen": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Configure Windows SmartScreen",
+          "description": "Specifies how to manage the behavior of Windows SmartScreen. Windows SmartScreen helps keep PCs safer by warning users before running unrecognized programs downloaded from the Internet. Some information is sent to Microsoft about files and programs run on PCs with this feature enabled."
+        },
+        "defaultValue": "1"
+      },
+      "DisallowDigestAuthentication": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Disallow Digest authentication",
+          "description": "Specifies whether the Windows Remote Management (WinRM) client will not use Digest authentication."
+        },
+        "defaultValue": "0"
+      },
+      "DisallowWinRMFromStoringRunAsCredentials": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Disallow WinRM from storing RunAs credentials",
+          "description": "Specifies whether the Windows Remote Management (WinRM) service will not allow RunAs credentials to be stored for any plug-ins."
+        },
+        "defaultValue": "1"
+      },
+      "DoNotAllowPasswordsToBeSaved": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Do not allow passwords to be saved",
+          "description": "Specifies whether to prevent Remote Desktop Services - Terminal Services clients from saving passwords on a computer."
+        },
+        "defaultValue": "1"
+      },
+      "SecuritySpecifyTheMaximumLogFileSizeKB": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Security: Specify the maximum log file size (KB)",
+          "description": "Specifies the maximum size for the Security event log in kilobytes."
+        },
+        "defaultValue": "196608"
+      },
+      "SetClientConnectionEncryptionLevel": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Set client connection encryption level",
+          "description": "Specifies whether to require the use of a specific encryption level to secure communications between client computers and RD Session Host servers during Remote Desktop Protocol (RDP) connections. This policy only applies when you are using native RDP encryption."
+        },
+        "defaultValue": "3"
+      },
+      "SetTheDefaultBehaviorForAutoRun": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Set the default behavior for AutoRun",
+          "description": "Specifies the default behavior for Autorun commands. Autorun commands are generally stored in autorun.inf files. They often launch the installation program or other routines."
+        },
+        "defaultValue": "1"
+      },
+      "SetupSpecifyTheMaximumLogFileSizeKB": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Setup: Specify the maximum log file size (KB)",
+          "description": "Specifies the maximum size for the Setup event log in kilobytes."
+        },
+        "defaultValue": "32768"
+      },
+      "SystemSpecifyTheMaximumLogFileSizeKB": {
+        "type": "String",
+        "metadata": {
+          "displayName": "System: Specify the maximum log file size (KB)",
+          "description": "Specifies the maximum size for the System event log in kilobytes."
+        },
+        "defaultValue": "32768"
+      },
+      "TurnOffDataExecutionPreventionForExplorer": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Turn off Data Execution Prevention for Explorer",
+          "description": "Specifies whether to turn off Data Execution Prevention for Windows File Explorer. Disabling data execution prevention can allow certain legacy plug-in applications to function without terminating Explorer."
+        },
+        "defaultValue": "0"
+      },
+      "SpecifyTheIntervalToCheckForDefinitionUpdates": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Specify the interval to check for definition updates",
+          "description": "Specifies an interval at which to check for Windows Defender definition updates. The time value is represented as the number of hours between update checks."
+        },
+        "defaultValue": "8"
+      },
+      "assignmentType": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Assignment Type",
+          "description": "Defines how the guest configuration assignment should behave: Audit (check compliance only), ApplyAndMonitor (apply once and monitor), or ApplyAndAutoCorrect (apply and auto-correct drift)"
+        },
+        "allowedValues": [
+          "Audit",
+          "ApplyAndMonitor",
+          "ApplyAndAutoCorrect"
+        ],
+        "defaultValue": "ApplyAndMonitor"
+      },
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of this policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          {
+            "allOf": [
+              {
+                "field": "type",
+                "equals": "Microsoft.Compute/virtualMachines"
+              },
+              {
+                "anyOf": [
+                  {
+                    "field": "Microsoft.Compute/imagePublisher",
+                    "in": [
+                      "esri",
+                      "incredibuild",
+                      "MicrosoftDynamicsAX",
+                      "MicrosoftSharepoint",
+                      "MicrosoftVisualStudio",
+                      "MicrosoftWindowsDesktop",
+                      "MicrosoftWindowsServerHPCPack"
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "MicrosoftWindowsServer"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageSKU",
+                        "notLike": "2008*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "MicrosoftSQLServer"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "notLike": "SQL2008*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "microsoft-dsvm"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "dsvm-win*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "microsoft-ads"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "in": [
+                          "standard-data-science-vm",
+                          "windows-data-science-vm"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "batch"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "equals": "rendering-windows2016"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "center-for-internet-security-inc"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "cis-windows-server-201*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "pivotal"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "bosh-windows-server*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "cloud-infrastructure-services"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "ad*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "field": "Microsoft.Compute/virtualMachines/osProfile.windowsConfiguration",
+                            "exists": "true"
+                          },
+                          {
+                            "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.osType",
+                            "like": "Windows*"
+                          }
+                        ]
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "field": "Microsoft.Compute/imageSKU",
+                            "exists": "false"
+                          },
+                          {
+                            "allOf": [
+                              {
+                                "field": "Microsoft.Compute/imageSKU",
+                                "notLike": "2008*"
+                              },
+                              {
+                                "field": "Microsoft.Compute/imageOffer",
+                                "notLike": "SQL2008*"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "value": "[parameters('IncludeArcMachines')]",
+                "equals": "true"
+              },
+              {
+                "anyOf": [
+                  {
+                    "allOf": [
+                      {
+                        "field": "type",
+                        "equals": "Microsoft.HybridCompute/machines"
+                      },
+                      {
+                        "field": "Microsoft.HybridCompute/imageOffer",
+                        "like": "windows*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "type",
+                        "equals": "Microsoft.ConnectedVMwarevSphere/virtualMachines"
+                      },
+                      {
+                        "field": "Microsoft.ConnectedVMwarevSphere/virtualMachines/osProfile.osType",
+                        "like": "windows*"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+          "name": "AzureBaseline_WindowsComponents",
+          "roleDefinitionIds": [
+            "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.GuestConfiguration/guestConfigurationAssignments/parameterHash",
+                "equals": "[base64(concat('[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '0', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '0', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '0', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '32768', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '196608', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '3', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '32768', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '32768', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '0', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '8'))]"
+              }
+            ]
+          },
+          "deployment": {
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "vmName": {
+                  "value": "[field('name')]"
+                },
+                "location": {
+                  "value": "[field('location')]"
+                },
+                "type": {
+                  "value": "[field('type')]"
+                },
+                "configurationName": {
+                  "value": "AzureBaseline_WindowsComponents"
+                },
+                "SendFileSamplesWhenFurtherAnalysisIsRequired": {
+                  "value": "['1']"
+                },
+                "AllowIndexingOfEncryptedFiles": {
+                  "value": "['0']"
+                },
+                "AllowTelemetry": {
+                  "value": "['1']"
+                },
+                "AllowUnencryptedTraffic": {
+                  "value": "['0']"
+                },
+                "AlwaysInstallWithElevatedPrivileges": {
+                  "value": "['0']"
+                },
+                "AlwaysPromptForPasswordUponConnection": {
+                  "value": "['1']"
+                },
+                "ApplicationSpecifyTheMaximumLogFileSizeKB": {
+                  "value": "['32768']"
+                },
+                "AutomaticallySendMemoryDumpsForOSgeneratedErrorReports": {
+                  "value": "['1']"
+                },
+                "ConfigureDefaultConsent": {
+                  "value": "['1']"
+                },
+                "ConfigureWindowsSmartScreen": {
+                  "value": "['1']"
+                },
+                "DisallowDigestAuthentication": {
+                  "value": "['1']"
+                },
+                "DisallowWinRMFromStoringRunAsCredentials": {
+                  "value": "['1']"
+                },
+                "DoNotAllowPasswordsToBeSaved": {
+                  "value": "['1']"
+                },
+                "SecuritySpecifyTheMaximumLogFileSizeKB": {
+                  "value": "['196608']"
+                },
+                "SetClientConnectionEncryptionLevel": {
+                  "value": "['3']"
+                },
+                "SetTheDefaultBehaviorForAutoRun": {
+                  "value": "['1']"
+                },
+                "SetupSpecifyTheMaximumLogFileSizeKB": {
+                  "value": "['32768']"
+                },
+                "SystemSpecifyTheMaximumLogFileSizeKB": {
+                  "value": "['32768']"
+                },
+                "TurnOffDataExecutionPreventionForExplorer": {
+                  "value": "['0']"
+                },
+                "SpecifyTheIntervalToCheckForDefinitionUpdates": {
+                  "value": "['8']"
+                },
+      "assignmentType": {
+                  "value": "[parameters('assignmentType')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "vmName": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "configurationName": {
+                    "type": "string"
+                  },
+                  "SendFileSamplesWhenFurtherAnalysisIsRequired": {
+                    "type": "string"
+                  },
+                  "AllowIndexingOfEncryptedFiles": {
+                    "type": "string"
+                  },
+                  "AllowTelemetry": {
+                    "type": "string"
+                  },
+                  "AllowUnencryptedTraffic": {
+                    "type": "string"
+                  },
+                  "AlwaysInstallWithElevatedPrivileges": {
+                    "type": "string"
+                  },
+                  "AlwaysPromptForPasswordUponConnection": {
+                    "type": "string"
+                  },
+                  "ApplicationSpecifyTheMaximumLogFileSizeKB": {
+                    "type": "string"
+                  },
+                  "AutomaticallySendMemoryDumpsForOSgeneratedErrorReports": {
+                    "type": "string"
+                  },
+                  "ConfigureDefaultConsent": {
+                    "type": "string"
+                  },
+                  "ConfigureWindowsSmartScreen": {
+                    "type": "string"
+                  },
+                  "DisallowDigestAuthentication": {
+                    "type": "string"
+                  },
+                  "DisallowWinRMFromStoringRunAsCredentials": {
+                    "type": "string"
+                  },
+                  "DoNotAllowPasswordsToBeSaved": {
+                    "type": "string"
+                  },
+                  "SecuritySpecifyTheMaximumLogFileSizeKB": {
+                    "type": "string"
+                  },
+                  "SetClientConnectionEncryptionLevel": {
+                    "type": "string"
+                  },
+                  "SetTheDefaultBehaviorForAutoRun": {
+                    "type": "string"
+                  },
+                  "SetupSpecifyTheMaximumLogFileSizeKB": {
+                    "type": "string"
+                  },
+                  "SystemSpecifyTheMaximumLogFileSizeKB": {
+                    "type": "string"
+                  },
+                  "TurnOffDataExecutionPreventionForExplorer": {
+                    "type": "string"
+                  },
+                  "SpecifyTheIntervalToCheckForDefinitionUpdates": {
+                    "type": "string"
+                  },
+      "assignmentType": {
+                    "type": "string"
+                  }
+                },
+                "resources": [
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('microsoft.hybridcompute/machines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.HybridCompute/machines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_WindowsComponents')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_WindowsComponents']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['196608']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['3']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['8']"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  },
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('Microsoft.Compute/virtualMachines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.Compute/virtualMachines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_WindowsComponents')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_WindowsComponents']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['196608']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['3']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['8']"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  },
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('Microsoft.ConnectedVMwarevSphere/virtualMachines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.ConnectedVMwarevSphere/virtualMachines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_WindowsComponents')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_WindowsComponents']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['196608']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['3']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['32768']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['0']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['8']"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsComponents.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+

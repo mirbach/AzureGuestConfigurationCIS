@@ -1,0 +1,23 @@
+{
+  "StorageAccount": {
+    "Name": "saserverhardeningdkleac",
+    "ResourceGroupName": "RG_ARC_Local_All_RestoreTest",
+    "ContainerName": "guestconfiguration"
+  },
+  "Location": "westeurope",
+  "CreatedDate": "07/10/2025 11:30:50",
+  "Deployment": {
+    "Location": "westeurope",
+    "TargetResourceGroup": "RG_ARC_Local_All_RestoreTest"
+  },
+  "SubscriptionId": "e749c27d-1157-4753-929c-adfddb9c814c",
+  "Policy": {
+    "DeployPolicyName": "GG-Deploy-UserRightsAssignment",
+    "AuditPolicyName": "GG-Audit-UserRightsAssignment"
+  },
+  "Package": {
+    "Name": "AzureBaseline_UserRightsAssignment",
+    "Version": "1.0.0.0",
+    "CurrentContentHash": "061FD244F54FAF35D58A371D254D9081692639F2C66420FC41507AE08F71C4AB"
+  }
+}

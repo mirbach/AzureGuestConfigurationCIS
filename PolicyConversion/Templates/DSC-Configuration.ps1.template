@@ -1,0 +1,14 @@
+Configuration {CONFIGURATION_NAME}
+{
+    param
+    (
+{PARAMETERS}
+    )
+
+    Import-DscResource -ModuleName '{DSC_MODULE_NAME}'
+
+    Node localhost
+    {
+{DSC_RESOURCES}
+    }
+}

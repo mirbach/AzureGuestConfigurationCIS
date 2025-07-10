@@ -1,0 +1,854 @@
+{
+  "properties": {
+    "displayName": "[GG Serverhardening] [DeployIfNotExists] Windows machines should meet requirements for 'Windows Firewall Properties'",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Deploys Guest Configuration assignment to Windows machines to configure Windows machines should have the specified Group Policy settings in the category 'Windows Firewall Properties' for firewall state, connections, rule management, and notifications. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",
+    "metadata": {
+      "category": "Guest Configuration",
+      "version": "1.0.0",
+      "requiredProviders": [
+        "Microsoft.GuestConfiguration"
+      ],
+      "guestConfiguration": {
+        "name": "AzureBaseline_WindowsFirewallProperties",
+        "version": "1.0.0.0",
+        "configurationParameter": {},
+        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
+        "contentHash": "PLACEHOLDER_HASH"
+      }
+    },
+    "version": "1.0.0",
+    "parameters": {
+      "IncludeArcMachines": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Include Arc connected servers",
+          "description": "By selecting this option, you agree to be charged monthly per Arc connected machine.",
+          "portalReview": "true"
+        },
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "defaultValue": "false"
+      },
+      "WindowsFirewallDomainUseProfileSettings": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Domain): Use profile settings",
+          "description": "Specifies whether Windows Firewall with Advanced Security uses the settings for the Domain profile to filter network traffic. If you select Off, Windows Firewall with Advanced Security will not use any of the firewall rules or connection security rules for this profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallDomainBehaviorForOutboundConnections": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Domain): Behavior for outbound connections",
+          "description": "Specifies the behavior for outbound connections for the Domain profile that do not match an outbound firewall rule. The default value of 0 means to allow connections, and a value of 1 means to block connections."
+        },
+        "defaultValue": "0"
+      },
+      "WindowsFirewallDomainApplyLocalConnectionSecurityRules": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Domain): Apply local connection security rules",
+          "description": "Specifies whether local administrators are allowed to create connection security rules that apply together with connection security rules configured by Group Policy for the Domain profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallDomainApplyLocalFirewallRules": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Domain): Apply local firewall rules",
+          "description": "Specifies whether local administrators are allowed to create local firewall rules that apply together with firewall rules configured by Group Policy for the Domain profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallDomainDisplayNotifications": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Domain): Display notifications",
+          "description": "Specifies whether Windows Firewall with Advanced Security displays notifications to the user when a program is blocked from receiving inbound connections, for the Domain profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPrivateUseProfileSettings": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Private): Use profile settings",
+          "description": "Specifies whether Windows Firewall with Advanced Security uses the settings for the Private profile to filter network traffic. If you select Off, Windows Firewall with Advanced Security will not use any of the firewall rules or connection security rules for this profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPrivateBehaviorForOutboundConnections": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Private): Behavior for outbound connections",
+          "description": "Specifies the behavior for outbound connections for the Private profile that do not match an outbound firewall rule. The default value of 0 means to allow connections, and a value of 1 means to block connections."
+        },
+        "defaultValue": "0"
+      },
+      "WindowsFirewallPrivateApplyLocalConnectionSecurityRules": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Private): Apply local connection security rules",
+          "description": "Specifies whether local administrators are allowed to create connection security rules that apply together with connection security rules configured by Group Policy for the Private profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPrivateApplyLocalFirewallRules": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Private): Apply local firewall rules",
+          "description": "Specifies whether local administrators are allowed to create local firewall rules that apply together with firewall rules configured by Group Policy for the Private profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPrivateDisplayNotifications": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Private): Display notifications",
+          "description": "Specifies whether Windows Firewall with Advanced Security displays notifications to the user when a program is blocked from receiving inbound connections, for the Private profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPublicUseProfileSettings": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Public): Use profile settings",
+          "description": "Specifies whether Windows Firewall with Advanced Security uses the settings for the Public profile to filter network traffic. If you select Off, Windows Firewall with Advanced Security will not use any of the firewall rules or connection security rules for this profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPublicBehaviorForOutboundConnections": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Public): Behavior for outbound connections",
+          "description": "Specifies the behavior for outbound connections for the Public profile that do not match an outbound firewall rule. The default value of 0 means to allow connections, and a value of 1 means to block connections."
+        },
+        "defaultValue": "0"
+      },
+      "WindowsFirewallPublicApplyLocalConnectionSecurityRules": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Public): Apply local connection security rules",
+          "description": "Specifies whether local administrators are allowed to create connection security rules that apply together with connection security rules configured by Group Policy for the Public profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPublicApplyLocalFirewallRules": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Public): Apply local firewall rules",
+          "description": "Specifies whether local administrators are allowed to create local firewall rules that apply together with firewall rules configured by Group Policy for the Public profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallPublicDisplayNotifications": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall (Public): Display notifications",
+          "description": "Specifies whether Windows Firewall with Advanced Security displays notifications to the user when a program is blocked from receiving inbound connections, for the Public profile."
+        },
+        "defaultValue": "1"
+      },
+      "WindowsFirewallDomainAllowUnicastResponse": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall: Domain: Allow unicast response",
+          "description": "Specifies whether Windows Firewall with Advanced Security permits the local computer to receive unicast responses to its outgoing multicast or broadcast messages; for the Domain profile."
+        },
+        "defaultValue": "0"
+      },
+      "WindowsFirewallPrivateAllowUnicastResponse": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall: Private: Allow unicast response",
+          "description": "Specifies whether Windows Firewall with Advanced Security permits the local computer to receive unicast responses to its outgoing multicast or broadcast messages; for the Private profile."
+        },
+        "defaultValue": "0"
+      },
+      "WindowsFirewallPublicAllowUnicastResponse": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Windows Firewall: Public: Allow unicast response",
+          "description": "Specifies whether Windows Firewall with Advanced Security permits the local computer to receive unicast responses to its outgoing multicast or broadcast messages; for the Public profile."
+        },
+        "defaultValue": "1"
+      },
+      "assignmentType": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Assignment Type",
+          "description": "Defines how the guest configuration assignment should behave: Audit (check compliance only), ApplyAndMonitor (apply once and monitor), or ApplyAndAutoCorrect (apply and auto-correct drift)"
+        },
+        "allowedValues": [
+          "Audit",
+          "ApplyAndMonitor",
+          "ApplyAndAutoCorrect"
+        ],
+        "defaultValue": "ApplyAndMonitor"
+      },
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of this policy"
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          {
+            "allOf": [
+              {
+                "field": "type",
+                "equals": "Microsoft.Compute/virtualMachines"
+              },
+              {
+                "anyOf": [
+                  {
+                    "field": "Microsoft.Compute/imagePublisher",
+                    "in": [
+                      "esri",
+                      "incredibuild",
+                      "MicrosoftDynamicsAX",
+                      "MicrosoftSharepoint",
+                      "MicrosoftVisualStudio",
+                      "MicrosoftWindowsDesktop",
+                      "MicrosoftWindowsServerHPCPack"
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "MicrosoftWindowsServer"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageSKU",
+                        "notLike": "2008*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "MicrosoftSQLServer"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "notLike": "SQL2008*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "microsoft-dsvm"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "dsvm-win*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "microsoft-ads"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "in": [
+                          "standard-data-science-vm",
+                          "windows-data-science-vm"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "batch"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "equals": "rendering-windows2016"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "center-for-internet-security-inc"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "cis-windows-server-201*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "pivotal"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "bosh-windows-server*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Compute/imagePublisher",
+                        "equals": "cloud-infrastructure-services"
+                      },
+                      {
+                        "field": "Microsoft.Compute/imageOffer",
+                        "like": "ad*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "field": "Microsoft.Compute/virtualMachines/osProfile.windowsConfiguration",
+                            "exists": "true"
+                          },
+                          {
+                            "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.osType",
+                            "like": "Windows*"
+                          }
+                        ]
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "field": "Microsoft.Compute/imageSKU",
+                            "exists": "false"
+                          },
+                          {
+                            "allOf": [
+                              {
+                                "field": "Microsoft.Compute/imageSKU",
+                                "notLike": "2008*"
+                              },
+                              {
+                                "field": "Microsoft.Compute/imageOffer",
+                                "notLike": "SQL2008*"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "value": "[parameters('IncludeArcMachines')]",
+                "equals": "true"
+              },
+              {
+                "anyOf": [
+                  {
+                    "allOf": [
+                      {
+                        "field": "type",
+                        "equals": "Microsoft.HybridCompute/machines"
+                      },
+                      {
+                        "field": "Microsoft.HybridCompute/imageOffer",
+                        "like": "windows*"
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "field": "type",
+                        "equals": "Microsoft.ConnectedVMwarevSphere/virtualMachines"
+                      },
+                      {
+                        "field": "Microsoft.ConnectedVMwarevSphere/virtualMachines/osProfile.osType",
+                        "like": "windows*"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+          "name": "AzureBaseline_WindowsFirewallProperties",
+          "roleDefinitionIds": [
+            "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.GuestConfiguration/guestConfigurationAssignments/parameterHash",
+                "equals": "[base64(concat('[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1', ',', '[TODO:DSCResource]ResourceName;PropertyName', '=', '1'))]"
+              }
+            ]
+          },
+          "deployment": {
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "vmName": {
+                  "value": "[field('name')]"
+                },
+                "location": {
+                  "value": "[field('location')]"
+                },
+                "type": {
+                  "value": "[field('type')]"
+                },
+                "configurationName": {
+                  "value": "AzureBaseline_WindowsFirewallProperties"
+                },
+                "WindowsFirewallDomainUseProfileSettings": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallDomainBehaviorForOutboundConnections": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallDomainApplyLocalConnectionSecurityRules": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallDomainApplyLocalFirewallRules": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallDomainDisplayNotifications": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPrivateUseProfileSettings": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPrivateBehaviorForOutboundConnections": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPrivateApplyLocalConnectionSecurityRules": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPrivateApplyLocalFirewallRules": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPrivateDisplayNotifications": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPublicUseProfileSettings": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPublicBehaviorForOutboundConnections": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPublicApplyLocalConnectionSecurityRules": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPublicApplyLocalFirewallRules": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPublicDisplayNotifications": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallDomainAllowUnicastResponse": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPrivateAllowUnicastResponse": {
+                  "value": "['1']"
+                },
+                "WindowsFirewallPublicAllowUnicastResponse": {
+                  "value": "['1']"
+                },
+      "assignmentType": {
+                  "value": "[parameters('assignmentType')]"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "vmName": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "configurationName": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallDomainUseProfileSettings": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallDomainBehaviorForOutboundConnections": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallDomainApplyLocalConnectionSecurityRules": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallDomainApplyLocalFirewallRules": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallDomainDisplayNotifications": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPrivateUseProfileSettings": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPrivateBehaviorForOutboundConnections": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPrivateApplyLocalConnectionSecurityRules": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPrivateApplyLocalFirewallRules": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPrivateDisplayNotifications": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPublicUseProfileSettings": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPublicBehaviorForOutboundConnections": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPublicApplyLocalConnectionSecurityRules": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPublicApplyLocalFirewallRules": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPublicDisplayNotifications": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallDomainAllowUnicastResponse": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPrivateAllowUnicastResponse": {
+                    "type": "string"
+                  },
+                  "WindowsFirewallPublicAllowUnicastResponse": {
+                    "type": "string"
+                  },
+      "assignmentType": {
+                    "type": "string"
+                  }
+                },
+                "resources": [
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('microsoft.hybridcompute/machines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.HybridCompute/machines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_WindowsFirewallProperties')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_WindowsFirewallProperties']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  },
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('Microsoft.Compute/virtualMachines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.Compute/virtualMachines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_WindowsFirewallProperties')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_WindowsFirewallProperties']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  },
+                  {
+                    "condition": "[equals(toLower(field('type')), toLower('Microsoft.ConnectedVMwarevSphere/virtualMachines'))]",
+                    "apiVersion": "2024-04-05",
+                    "type": "Microsoft.ConnectedVMwarevSphere/virtualMachines/providers/guestConfigurationAssignments",
+                    "name": "[concat(field('name'), '/Microsoft.GuestConfiguration/', 'AzureBaseline_WindowsFirewallProperties')]",
+                    "location": "[field('location')]",
+                    "properties": {
+                      "guestConfiguration": {
+                        "name": "['AzureBaseline_WindowsFirewallProperties']",
+                        "version": "1.0.0.0",
+                        "assignmentType": "[parameters('assignmentType')]",
+                        "configurationParameter": [
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          },
+                          {
+                            "name": "[TODO:DSCResource]ResourceName;PropertyName",
+                            "value": "['1']"
+                          }
+                        ],
+                        "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_WindowsFirewallProperties.zip",
+                        "contentHash": "PLACEHOLDER_HASH"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
