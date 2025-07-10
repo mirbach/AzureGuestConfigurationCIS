@@ -9,6 +9,21 @@ param(
     [string]$ManagementGroupId
 )
 
+# Load configuration from azure-config.json if available
+$configFile = ".\GuestConfiguration\AzureBaseline_SystemAuditPoliciesObjectAccess\azure-config.json"
+if (Test-Path $configFile) {
+    Write-Host "Loading configuration from azure-config.json..." -ForegroundColor Green
+    $config = Get-Content $configFile | ConvertFrom-Json
+    
+    # Use config values if parameters are not provided
+    if (-not $SubscriptionId -and $config.SubscriptionId) {
+        $SubscriptionId = $config.SubscriptionId
+        Write-Host "Using Subscription ID from config: $SubscriptionId" -ForegroundColor Yellow
+    }
+} else {
+    Write-Warning "Configuration file not found at $configFile"
+}
+
 # Import required modules
 $requiredModules = @('Az.Accounts', 'Az.Resources')
 foreach ($module in $requiredModules) {

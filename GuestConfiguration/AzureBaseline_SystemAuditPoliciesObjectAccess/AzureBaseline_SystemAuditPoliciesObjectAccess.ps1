@@ -12,7 +12,7 @@ Configuration AzureBaseline_SystemAuditPoliciesObjectAccess
         [string]$AuditFileSystem = 'No Auditing'
     )
 
-    Import-DscResource -ModuleName 'AuditPolicyDsc' -ModuleVersion '1.4.0.0'
+    Import-DscResource -ModuleName 'AuditPolicyDsc'
 
     Node localhost
     {

@@ -19,7 +19,7 @@
           "AuditFileSystem": "[AuditPolicySubcategory]Audit File System;AuditFlag"
         },
         "contentUri": "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/AzureBaseline_SystemAuditPoliciesObjectAccess.zip",
-        "contentHash": "DAC587B13ED9A20F16686A35DBAC975553E237221F7D7C6B32CC405ED45097A3"
+        "contentHash": "E2D68445BA5B3816E78309ACE6A5778BFECC0157ED9A4D9842250272A79A58AE"
       }
     },
     "version": "3.0.0",

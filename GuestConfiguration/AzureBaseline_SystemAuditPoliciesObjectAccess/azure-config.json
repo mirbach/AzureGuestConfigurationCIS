@@ -1,7 +1,23 @@
 {
   "Location": "West Europe",
-  "ResourceGroupName": "RG_ARC_Local_All_RestoreTest",
-  "CreatedDate": "09/07/2025 10:36:41",
   "SubscriptionId": "e749c27d-1157-4753-929c-adfddb9c814c",
-  "StorageAccountName": "saserverhardeningdkleac"
+  "CreatedDate": "09/07/2025 10:36:41",
+  "StorageAccount": {
+    "Name": "saserverhardeningdkleac",
+    "ResourceGroupName": "RG_ARC_Local_All_RestoreTest",
+    "ContainerName": "guestconfiguration"
+  },
+  "Deployment": {
+    "TargetResourceGroup": "RG_ARC_Local_All_RestoreTest",
+    "Location": "westeurope"
+  },
+  "Policy": {
+    "AuditPolicyName": "GG-Audit-SystemAuditPolicies-ObjectAccess",
+    "DeployPolicyName": "GG-Deploy-SystemAuditPolicies-ObjectAccess"
+  },
+  "Package": {
+    "Name": "AzureBaseline_SystemAuditPoliciesObjectAccess",
+    "Version": "1.0.0.0",
+    "CurrentContentHash": "AF2A9739BA08FC08F0C9C1C601BD577DD79D5FED00745BFAAAC3A683F3B1EFAA"
+  }
 }

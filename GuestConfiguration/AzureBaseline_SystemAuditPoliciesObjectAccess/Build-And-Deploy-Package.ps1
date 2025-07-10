@@ -27,6 +27,32 @@ param(
 # Configuration name
 $configName = "AzureBaseline_SystemAuditPoliciesObjectAccess"
 
+# Load configuration from azure-config.json
+$configFile = ".\azure-config.json"
+if (Test-Path $configFile) {
+    Write-Host "Loading configuration from azure-config.json..." -ForegroundColor Green
+    $config = Get-Content $configFile | ConvertFrom-Json
+    
+    # Use config values if parameters are not provided
+    if (-not $SubscriptionId -and $config.SubscriptionId) {
+        $SubscriptionId = $config.SubscriptionId
+    }
+    if (-not $ResourceGroupName -and $config.StorageAccount.ResourceGroupName) {
+        $ResourceGroupName = $config.StorageAccount.ResourceGroupName
+    }
+    if (-not $StorageAccountName -and $config.StorageAccount.Name) {
+        $StorageAccountName = $config.StorageAccount.Name
+    }
+    
+    Write-Host "Configuration loaded:" -ForegroundColor Yellow
+    Write-Host "  Subscription ID: $SubscriptionId" -ForegroundColor Gray
+    Write-Host "  Storage Resource Group: $ResourceGroupName" -ForegroundColor Gray
+    Write-Host "  Storage Account: $StorageAccountName" -ForegroundColor Gray
+    Write-Host "  Target Resource Group: $($config.Deployment.TargetResourceGroup)" -ForegroundColor Gray
+} else {
+    Write-Warning "Configuration file azure-config.json not found. Using parameters only."
+}
+
 Write-Host "=== Guest Configuration Package Builder ===" -ForegroundColor Magenta
 Write-Host "Configuration: $configName" -ForegroundColor Cyan
 

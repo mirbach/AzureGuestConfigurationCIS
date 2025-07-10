@@ -189,6 +189,42 @@ The configuration accepts the following parameters:
   - Values: "No Auditing", "Success", "Failure", "Success and Failure"
   - Default: "No Auditing"
 
+## Configuration File
+
+The project now uses a centralized configuration file (`azure-config.json`) to store Azure resource information:
+
+```json
+{
+  "Location": "West Europe",
+  "SubscriptionId": "e749c27d-1157-4753-929c-adfddb9c814c",
+  "StorageAccount": {
+    "Name": "saserverhardeningdkleac",
+    "ResourceGroupName": "RG_ARC_Local_All_RestoreTest",
+    "ContainerName": "guestconfiguration"
+  },
+  "Deployment": {
+    "TargetResourceGroup": "RG_ARC_Local_All_RestoreTest",
+    "Location": "westeurope"
+  },
+  "Policy": {
+    "AuditPolicyName": "GG-Audit-SystemAuditPolicies-ObjectAccess",
+    "DeployPolicyName": "GG-Deploy-SystemAuditPolicies-ObjectAccess"
+  },
+  "Package": {
+    "Name": "AzureBaseline_SystemAuditPoliciesObjectAccess",
+    "Version": "1.0.0.0",
+    "CurrentContentHash": "AF2A9739BA08FC08F0C9C1C601BD577DD79D5FED00745BFAAAC3A683F3B1EFAA"
+  }
+}
+```
+
+This configuration file is automatically loaded by:
+- `Build-And-Deploy-Package.ps1`
+- `Deploy-GuestConfigurationPackage.ps1`
+- `Deploy-Policies-PowerShell.ps1`
+
+Parameters can still be provided explicitly to override configuration file values.
+
 ## Policy Deployment
 
 After building and deploying the package, deploy the policies to Azure:

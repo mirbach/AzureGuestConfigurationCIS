@@ -1,41 +1,41 @@
 /*
 @TargetNode='localhost'
 @GeneratedBy=amirb
-@GenerationDate=07/09/2025 20:41:40
+@GenerationDate=07/10/2025 10:18:41
 @GenerationHost=AMIAI300
 */
 
 instance of AuditPolicySubcategory as $AuditPolicySubcategory1ref
 {
-ModuleName = "AuditPolicyDsc";
+ModuleVersion = "1.4.0.0";
+ Ensure = "Present";
+ Name = "Detailed File Share";
  SourceInfo = "C:\\git\\AzureGuestConfigurationCIS\\GuestConfiguration\\AzureBaseline_SystemAuditPoliciesObjectAccess\\AzureBaseline_SystemAuditPoliciesObjectAccess.ps1::19::9::AuditPolicySubcategory";
  AuditFlag = "No Auditing";
- Ensure = "Present";
  ResourceID = "[AuditPolicySubcategory]Audit Detailed File Share";
- ModuleVersion = "1.4.0.0";
- Name = "Detailed File Share";
+ ModuleName = "AuditPolicyDsc";
  ConfigurationName = "AzureBaseline_SystemAuditPoliciesObjectAccess";
 };
 instance of AuditPolicySubcategory as $AuditPolicySubcategory2ref
 {
-ModuleName = "AuditPolicyDsc";
+ModuleVersion = "1.4.0.0";
+ Ensure = "Present";
+ Name = "File Share";
  SourceInfo = "C:\\git\\AzureGuestConfigurationCIS\\GuestConfiguration\\AzureBaseline_SystemAuditPoliciesObjectAccess\\AzureBaseline_SystemAuditPoliciesObjectAccess.ps1::26::9::AuditPolicySubcategory";
  AuditFlag = "No Auditing";
- Ensure = "Present";
  ResourceID = "[AuditPolicySubcategory]Audit File Share";
- ModuleVersion = "1.4.0.0";
- Name = "File Share";
+ ModuleName = "AuditPolicyDsc";
  ConfigurationName = "AzureBaseline_SystemAuditPoliciesObjectAccess";
 };
 instance of AuditPolicySubcategory as $AuditPolicySubcategory3ref
 {
-ModuleName = "AuditPolicyDsc";
+ModuleVersion = "1.4.0.0";
+ Ensure = "Present";
+ Name = "File System";
  SourceInfo = "C:\\git\\AzureGuestConfigurationCIS\\GuestConfiguration\\AzureBaseline_SystemAuditPoliciesObjectAccess\\AzureBaseline_SystemAuditPoliciesObjectAccess.ps1::33::9::AuditPolicySubcategory";
  AuditFlag = "No Auditing";
- Ensure = "Present";
  ResourceID = "[AuditPolicySubcategory]Audit File System";
- ModuleVersion = "1.4.0.0";
- Name = "File System";
+ ModuleName = "AuditPolicyDsc";
  ConfigurationName = "AzureBaseline_SystemAuditPoliciesObjectAccess";
 };
 instance of OMI_ConfigurationDocument
@@ -49,7 +49,7 @@ instance of OMI_ConfigurationDocument
 
                         Author="amirb";
 
-                        GenerationDate="07/09/2025 20:41:40";
+                        GenerationDate="07/10/2025 10:18:41";
 
                         GenerationHost="AMIAI300";
 

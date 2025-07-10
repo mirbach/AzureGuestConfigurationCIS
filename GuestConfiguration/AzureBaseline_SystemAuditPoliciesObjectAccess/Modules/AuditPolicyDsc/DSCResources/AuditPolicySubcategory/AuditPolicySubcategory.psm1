@@ -153,4 +153,4 @@ function Test-TargetResource
     }
 }
 
-Export-ModuleMember -Function *-TargetResource
+Export-ModuleMember -Function Get-TargetResource, Set-TargetResource, Test-TargetResource

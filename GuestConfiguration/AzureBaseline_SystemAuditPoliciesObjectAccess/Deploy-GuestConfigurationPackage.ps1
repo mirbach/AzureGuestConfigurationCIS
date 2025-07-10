@@ -10,13 +10,13 @@
 # NOTE: This script uploads the package to Azure Storage. The package URI can then be used in Azure Policy definitions.
 
 param(
-    [Parameter(Mandatory = $true, HelpMessage = "Azure Subscription ID")]
+    [Parameter(Mandatory = $false, HelpMessage = "Azure Subscription ID")]
     [string]$SubscriptionId,
     
-    [Parameter(Mandatory = $true, HelpMessage = "Resource Group containing the storage account")]
+    [Parameter(Mandatory = $false, HelpMessage = "Resource Group containing the storage account")]
     [string]$ResourceGroupName,
     
-    [Parameter(Mandatory = $true, HelpMessage = "Storage Account name (must exist)")]
+    [Parameter(Mandatory = $false, HelpMessage = "Storage Account name (must exist)")]
     [string]$StorageAccountName,
     
     [Parameter(Mandatory = $false, HelpMessage = "Container name for Guest Configuration packages")]
@@ -25,6 +25,46 @@ param(
     [Parameter(Mandatory = $false, HelpMessage = "Path to the Guest Configuration package")]
     [string]$PackagePath = ".\Output\AzureBaseline_SystemAuditPoliciesObjectAccess.zip"
 )
+
+# Load configuration from azure-config.json if parameters are not provided
+$configFile = ".\azure-config.json"
+if (Test-Path $configFile) {
+    Write-Host "Loading configuration from azure-config.json..." -ForegroundColor Green
+    $config = Get-Content $configFile | ConvertFrom-Json
+    
+    # Use config values if parameters are not provided
+    if (-not $SubscriptionId -and $config.SubscriptionId) {
+        $SubscriptionId = $config.SubscriptionId
+    }
+    if (-not $ResourceGroupName -and $config.StorageAccount.ResourceGroupName) {
+        $ResourceGroupName = $config.StorageAccount.ResourceGroupName
+    }
+    if (-not $StorageAccountName -and $config.StorageAccount.Name) {
+        $StorageAccountName = $config.StorageAccount.Name
+    }
+    if (-not $ContainerName -and $config.StorageAccount.ContainerName) {
+        $ContainerName = $config.StorageAccount.ContainerName
+    }
+    
+    Write-Host "Configuration loaded:" -ForegroundColor Yellow
+    Write-Host "  Subscription ID: $SubscriptionId" -ForegroundColor Gray
+    Write-Host "  Resource Group: $ResourceGroupName" -ForegroundColor Gray
+    Write-Host "  Storage Account: $StorageAccountName" -ForegroundColor Gray
+    Write-Host "  Container: $ContainerName" -ForegroundColor Gray
+} else {
+    Write-Warning "Configuration file azure-config.json not found."
+}
+
+# Validate required parameters
+if (-not $SubscriptionId) {
+    throw "SubscriptionId is required. Provide it as parameter or in azure-config.json"
+}
+if (-not $ResourceGroupName) {
+    throw "ResourceGroupName is required. Provide it as parameter or in azure-config.json"
+}
+if (-not $StorageAccountName) {
+    throw "StorageAccountName is required. Provide it as parameter or in azure-config.json"
+}
 
 # Import required modules
 $requiredModules = @('Az.Accounts', 'Az.Storage', 'GuestConfiguration')
