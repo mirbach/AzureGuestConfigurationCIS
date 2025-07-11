@@ -527,9 +527,6 @@ function New-DSCConfiguration {
                         $dscResources += "                '2' { 'Administrators and Interactive Users' }`r`n"
                         $dscResources += "                default { `$$($param.Name) }`r`n"
                     }
-                    'Microsoft_network_server_Amount_of_idle_time_required_before_suspending_session' {
-                        $dscResources += "                default { [uint32]`$$($param.Name) }`r`n"
-                    }
                     'Network_access_Remotely_accessible_registry_paths' {
                         $dscResources += "                default { `$$($param.Name) }`r`n"
                     }
@@ -538,9 +535,6 @@ function New-DSCConfiguration {
                     }
                     'Network_access_Shares_that_can_be_accessed_anonymously' {
                         $dscResources += "                default { `$$($param.Name) }`r`n"
-                    }
-                    'Network_security_Configure_encryption_types_allowed_for_Kerberos' {
-                        $dscResources += "                default { [uint32]`$$($param.Name) }`r`n"
                     }
                     'Recovery_console_Allow_floppy_copy_and_access_to_all_drives_and_folders' {
                         $dscResources += "                '0' { 'Disabled' }`r`n"
@@ -554,71 +548,17 @@ function New-DSCConfiguration {
                         $dscResources += "                'Disabled' { 'Disabled' }`r`n"
                         $dscResources += "                'Enabled' { 'Enabled' }`r`n"
                     }
-                    'Shutdown_Allow_system_to_be_shut_down_without_having_to_log_on' {
+                    'System_objects_Require_case_insensitivity_for_non_Windows_subsystems' {
                         $dscResources += "                '0' { 'Disabled' }`r`n"
                         $dscResources += "                '1' { 'Enabled' }`r`n"
                         $dscResources += "                'Disabled' { 'Disabled' }`r`n"
                         $dscResources += "                'Enabled' { 'Enabled' }`r`n"
                     }
-                    'Shutdown_Clear_virtual_memory_pagefile' {
+                    'System_objects_Strengthen_default_permissions_of_internal_system_objects_eg_Symbolic_Links' {
                         $dscResources += "                '0' { 'Disabled' }`r`n"
                         $dscResources += "                '1' { 'Enabled' }`r`n"
                         $dscResources += "                'Disabled' { 'Disabled' }`r`n"
                         $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Microsoft_network_client_Digitally_sign_communications_always' {
-                        $dscResources += "                '0' { 'Disabled' }`r`n"
-                        $dscResources += "                '1' { 'Enabled' }`r`n"
-                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Microsoft_network_client_Digitally_sign_communications_if_server_agrees' {
-                        $dscResources += "                '0' { 'Disabled' }`r`n"
-                        $dscResources += "                '1' { 'Enabled' }`r`n"
-                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Microsoft_network_client_Send_unencrypted_password_to_third_party_SMB_servers' {
-                        $dscResources += "                '0' { 'Disabled' }`r`n"
-                        $dscResources += "                '1' { 'Enabled' }`r`n"
-                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Microsoft_network_server_Digitally_sign_communications_always' {
-                        $dscResources += "                '0' { 'Disabled' }`r`n"
-                        $dscResources += "                '1' { 'Enabled' }`r`n"
-                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Microsoft_network_server_Digitally_sign_communications_if_client_agrees' {
-                        $dscResources += "                '0' { 'Disabled' }`r`n"
-                        $dscResources += "                '1' { 'Enabled' }`r`n"
-                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Microsoft_network_server_Disconnect_clients_when_logon_hours_expire' {
-                        $dscResources += "                '0' { 'Disabled' }`r`n"
-                        $dscResources += "                '1' { 'Enabled' }`r`n"
-                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                    }
-                    'Network_security_Configure_encryption_types_allowed_for_Kerberos' {
-                        $dscResources += "                '2147483644' { 'AES128_HMAC_SHA1, AES256_HMAC_SHA1, FUTURE' }`r`n"
-                        $dscResources += "                '2147483640' { 'AES128_HMAC_SHA1, AES256_HMAC_SHA1' }`r`n"
-                        $dscResources += "                '24' { 'AES128_HMAC_SHA1, AES256_HMAC_SHA1' }`r`n"
-                        $dscResources += "                default { [uint32]`$$($param.Name) }`r`n"
-                    }
-                    'Network_security_Minimum_session_security_for_NTLM_SSP_based_including_secure_RPC_clients' {
-                        $dscResources += "                '537395200' { 'Both options checked' }`r`n"
-                        $dscResources += "                '536870912' { 'Require NTLMv2 session security' }`r`n"
-                        $dscResources += "                '524288' { 'Require 128-bit encryption' }`r`n"
-                        $dscResources += "                default { 'Both options checked' }`r`n"
-                    }
-                    'Network_security_Minimum_session_security_for_NTLM_SSP_based_including_secure_RPC_servers' {
-                        $dscResources += "                '537395200' { 'Both options checked' }`r`n"
-                        $dscResources += "                '536870912' { 'Require NTLMv2 session security' }`r`n"
-                        $dscResources += "                '524288' { 'Require 128-bit encryption' }`r`n"
-                        $dscResources += "                default { 'Both options checked' }`r`n"
                     }
                     default {
                         # For other SecurityOption parameters, try default mappings based on property name patterns
