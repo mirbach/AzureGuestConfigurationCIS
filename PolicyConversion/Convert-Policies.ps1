@@ -243,7 +243,7 @@ function Get-PolicyParameters {
     if ($Policy.properties.parameters) {
         $allParams = @()
         foreach ($param in $Policy.properties.parameters.PSObject.Properties) {
-            if ($param.Name -notmatch "^(IncludeArcMachines|effect|assignmentType)$") {
+            if ($param.Name -notmatch "^(effect|assignmentType)$") {
                 $allParams += @{
                     Name = $param.Name
                     Type = $param.Value.type
@@ -255,10 +255,10 @@ function Get-PolicyParameters {
             }
         }
         
-        # Limit to 17 parameters (leaving room for 3 essential parameters: IncludeArcMachines, assignmentType, effect)
-        if ($allParams.Count -gt 17) {
-            Write-Host "  Policy has $($allParams.Count) parameters, limiting to 17 (Azure Policy max is 20)" -ForegroundColor Yellow
-            $parameters = $allParams | Select-Object -First 17
+        # Limit to 18 parameters (leaving room for 2 essential parameters: effect, assignmentType)
+        if ($allParams.Count -gt 18) {
+            Write-Host "  Policy has $($allParams.Count) parameters, limiting to 18 (Azure Policy max is 20)" -ForegroundColor Yellow
+            $parameters = $allParams | Select-Object -First 18
         } else {
             $parameters = $allParams
         }
@@ -281,6 +281,11 @@ function New-DSCConfiguration {
     $policyType = Get-PolicyType -PolicyName $PolicyName
     
     foreach ($param in $Parameters) {
+        # Skip system parameters that are handled separately
+        if ($param.Name -match "^(IncludeArcMachines|effect|assignmentType)$") {
+            continue
+        }
+        
         # Don't convert the default value - keep it as original for DSC resources to handle
         $defaultValue = $param.DefaultValue
         $parameterBlock += "        [Parameter()]`r`n"
@@ -295,6 +300,11 @@ function New-DSCConfiguration {
     foreach ($param in $Parameters) {
         # Skip empty or null parameter names
         if (-not $param.Name -or $param.Name.Trim() -eq "") {
+            continue
+        }
+        
+        # Skip system parameters that are handled separately
+        if ($param.Name -match "^(IncludeArcMachines|effect|assignmentType)$") {
             continue
         }
         
@@ -427,6 +437,22 @@ function New-DSCConfiguration {
                     'UACBehaviorOfTheElevationPromptForAdministratorsInAdminApprovalMode' { $propertyName = 'User_Account_Control_Behavior_of_the_elevation_prompt_for_administrators_in_Admin_Approval_Mode' }
                     'UACDetectApplicationInstallationsAndPromptForElevation' { $propertyName = 'User_Account_Control_Detect_application_installations_and_prompt_for_elevation' }
                     'UACRunAllAdministratorsInAdminApprovalMode' { $propertyName = 'User_Account_Control_Run_all_administrators_in_Admin_Approval_Mode' }
+                    # Fix Warning 1: AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits
+                    'AuditShutDownSystemImmediatelyIfUnableToLogSecurityAudits' { $propertyName = 'Audit_Shut_down_system_immediately_if_unable_to_log_security_audits' }
+                    # Fix Warning 2: DevicesAllowedToFormatAndEjectRemovableMedia
+                    'DevicesAllowedToFormatAndEjectRemovableMedia' { $propertyName = 'Devices_Allowed_to_format_and_eject_removable_media' }
+                    # Fix Warning 3: MicrosoftNetworkServerAmountOfIdleTimeRequiredBeforeSuspendingSession
+                    'MicrosoftNetworkServerAmountOfIdleTimeRequiredBeforeSuspendingSession' { $propertyName = 'Microsoft_network_server_Amount_of_idle_time_required_before_suspending_session' }
+                    # Fix Warning 4: NetworkAccessRemotelyAccessibleRegistryPaths
+                    'NetworkAccessRemotelyAccessibleRegistryPaths' { $propertyName = 'Network_access_Remotely_accessible_registry_paths' }
+                    # Fix Warning 5: NetworkAccessRemotelyAccessibleRegistryPathsAndSubpaths
+                    'NetworkAccessRemotelyAccessibleRegistryPathsAndSubpaths' { $propertyName = 'Network_access_Remotely_accessible_registry_paths_and_subpaths' }
+                    # Fix Warning 6: NetworkAccessSharesThatCanBeAccessedAnonymously
+                    'NetworkAccessSharesThatCanBeAccessedAnonymously' { $propertyName = 'Network_access_Shares_that_can_be_accessed_anonymously' }
+                    # Fix Warning 7: NetworkSecurityConfigureEncryptionTypesAllowedForKerberos
+                    'NetworkSecurityConfigureEncryptionTypesAllowedForKerberos' { $propertyName = 'Network_security_Configure_encryption_types_allowed_for_Kerberos' }
+                    # Fix Warning 8: RecoveryConsoleAllowFloppyCopyAndAccessToAllDrivesAndAllFolders
+                    'RecoveryConsoleAllowFloppyCopyAndAccessToAllDrivesAndAllFolders' { $propertyName = 'Recovery_console_Allow_floppy_copy_and_access_to_all_drives_and_folders' }
                     default { 
                         Write-Warning "Unknown SecurityOption parameter: $($param.Name)"
                         $propertyName = $param.Name
@@ -488,6 +514,40 @@ function New-DSCConfiguration {
                         $dscResources += "                '1' { 'Negotiate signing' }`r`n"
                         $dscResources += "                '2' { 'Require signing' }`r`n"
                     }
+                    # Add value conversion logic for newly added SecurityOption parameters
+                    'Audit_Shut_down_system_immediately_if_unable_to_log_security_audits' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Devices_Allowed_to_format_and_eject_removable_media' {
+                        $dscResources += "                '0' { 'Administrators' }`r`n"
+                        $dscResources += "                '1' { 'Administrators and Power Users' }`r`n"
+                        $dscResources += "                '2' { 'Administrators and Interactive Users' }`r`n"
+                        $dscResources += "                default { `$$($param.Name) }`r`n"
+                    }
+                    'Microsoft_network_server_Amount_of_idle_time_required_before_suspending_session' {
+                        $dscResources += "                default { [uint32]`$$($param.Name) }`r`n"
+                    }
+                    'Network_access_Remotely_accessible_registry_paths' {
+                        $dscResources += "                default { `$$($param.Name) }`r`n"
+                    }
+                    'Network_access_Remotely_accessible_registry_paths_and_subpaths' {
+                        $dscResources += "                default { `$$($param.Name) }`r`n"
+                    }
+                    'Network_access_Shares_that_can_be_accessed_anonymously' {
+                        $dscResources += "                default { `$$($param.Name) }`r`n"
+                    }
+                    'Network_security_Configure_encryption_types_allowed_for_Kerberos' {
+                        $dscResources += "                default { [uint32]`$$($param.Name) }`r`n"
+                    }
+                    'Recovery_console_Allow_floppy_copy_and_access_to_all_drives_and_folders' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
                     default {
                         # For other SecurityOption parameters, try default mappings
                         if ($propertyName -match '_account_status$') {
@@ -545,11 +605,82 @@ function New-DSCConfiguration {
             if ($dscModules -notcontains "PSDscResources") { $dscModules += "PSDscResources" }
             $dscResources += "        Registry '$($param.Name)'`r`n"
             $dscResources += "        {`r`n"
-            $dscResources += "            # TODO: Configure registry key for $($param.DisplayName)`r`n"
-            $dscResources += "            Key = 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Example'`r`n"
-            $dscResources += "            ValueName = '$($param.Name)'`r`n"
+            
+            # Map specific registry keys for known Administrative Templates policies
+            $registryKey = ""
+            $valueName = ""
+            $valueType = "DWord"
+            
+            if ($PolicyName -like "*Control Panel*") {
+                # Control Panel specific mappings
+                switch ($param.Name) {
+                    'RestrictInputPersonalization' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\InputPersonalization'
+                        $valueName = 'RestrictImplicitInkCollection'
+                        $dscResources += "            # Prevent sending personal data to Microsoft for input personalization`r`n"
+                    }
+                    'PreventEnablingLockScreenCamera' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+                        $valueName = 'NoLockScreenCamera'
+                        $dscResources += "            # Prevent enabling camera on lock screen`r`n"
+                    }
+                    'PreventEnablingLockScreenSlideShow' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+                        $valueName = 'NoLockScreenSlideshow'
+                        $dscResources += "            # Prevent enabling slide show on lock screen`r`n"
+                    }
+                    default {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\ControlPanel'
+                        $valueName = $param.Name
+                        $dscResources += "            # TODO: Configure registry key for $($param.DisplayName)`r`n"
+                    }
+                }
+            } elseif ($PolicyName -like "*MSS*") {
+                # MSS (Legacy) specific mappings
+                switch ($param.Name) {
+                    'DisableAutomaticLogon' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
+                        $valueName = 'AutoAdminLogon'
+                        $dscResources += "            # MSS: Disable automatic logon`r`n"
+                    }
+                    'EnableScreenSaver' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Control Panel\Desktop'
+                        $valueName = 'ScreenSaveActive'
+                        $dscResources += "            # MSS: Enable screen saver`r`n"
+                    }
+                    'DisableNetworkBridgeInstall' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Network Connections'
+                        $valueName = 'NC_AllowNetBridge_NLA'
+                        $dscResources += "            # MSS: Disable network bridge installation`r`n"
+                    }
+                    'EnableSafeDLLSearchMode' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager'
+                        $valueName = 'SafeDllSearchMode'
+                        $dscResources += "            # MSS: Enable safe DLL search mode`r`n"
+                    }
+                    'WarningLevel' {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Security'
+                        $valueName = 'WarningLevel'
+                        $dscResources += "            # MSS: Warning level`r`n"
+                    }
+                    default {
+                        $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\MSS'
+                        $valueName = $param.Name
+                        $dscResources += "            # TODO: Configure registry key for $($param.DisplayName)`r`n"
+                    }
+                }
+            } else {
+                # Generic mapping for other Administrative Templates
+                $registryKey = 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Example'
+                $valueName = $param.Name
+                $valueType = 'String'
+                $dscResources += "            # TODO: Configure registry key for $($param.DisplayName)`r`n"
+            }
+            
+            $dscResources += "            Key = '$registryKey'`r`n"
+            $dscResources += "            ValueName = '$valueName'`r`n"
             $dscResources += "            ValueData = `$$($param.Name)`r`n"
-            $dscResources += "            ValueType = 'String'`r`n"
+            $dscResources += "            ValueType = '$valueType'`r`n"
             $dscResources += "            Ensure = 'Present'`r`n"
             $dscResources += "        }`r`n`r`n"
         }
@@ -619,7 +750,7 @@ function New-DeployIfNotExistsPolicy {
     # Generate configuration parameters
     $configurationParameters = ""
     foreach ($param in $Parameters) {
-        if ($param.Name -and $param.Name.Trim() -ne "") {
+        if ($param.Name -and $param.Name.Trim() -ne "" -and $param.Name -notmatch "^(IncludeArcMachines|effect|assignmentType)$") {
             $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
             $configurationParameters += "          `"$($param.Name)`": `"$dscMapping`",`r`n"
         }
@@ -627,7 +758,7 @@ function New-DeployIfNotExistsPolicy {
     $configurationParameters = $configurationParameters.TrimEnd(",`r`n")
     
     # Generate other template sections
-    $parameterHashConcat = ($Parameters | Where-Object { $_.Name -and $_.Name.Trim() -ne "" } | ForEach-Object { 
+    $parameterHashConcat = ($Parameters | Where-Object { $_.Name -and $_.Name.Trim() -ne "" -and $_.Name -notmatch "^(IncludeArcMachines|effect|assignmentType)$" } | ForEach-Object { 
         $dscMapping = Get-DSCParameterMapping -ParameterName $_.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
         "'$dscMapping', '=', parameters('$($_.Name)')" 
     }) -join ", ',', "
@@ -637,7 +768,7 @@ function New-DeployIfNotExistsPolicy {
     $configurationParameterArray = ""
     
     foreach ($param in $Parameters) {
-        if ($param.Name -and $param.Name.Trim() -ne "") {
+        if ($param.Name -and $param.Name.Trim() -ne "" -and $param.Name -notmatch "^(IncludeArcMachines|effect|assignmentType)$") {
             $deploymentParameters += "                `"$($param.Name)`": {`r`n"
             $deploymentParameters += "                  `"value`": `"[parameters('$($param.Name)')]`"`r`n"
             $deploymentParameters += "                },`r`n"
@@ -687,8 +818,8 @@ function New-DeployIfNotExistsPolicy {
     }
     
     # Handle comma placement for parameters
-    # Always need a comma after IncludeArcMachines since assignmentType follows
-    $policyParametersComma = ","
+    # Need a comma before assignmentType when there are user parameters
+    $policyParametersComma = if ($Parameters.Count -gt 0) { "," } else { "" }
     
     # When there are parameters, add a newline before the first parameter
     if ($Parameters.Count -gt 0) {

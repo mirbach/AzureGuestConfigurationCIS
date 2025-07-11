@@ -25,6 +25,67 @@
           "Disabled"
         ],
         "defaultValue": "AuditIfNotExists"
+      },
+      "DisableAutomaticLogon": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MSS: Disable automatic logon",
+          "description": "Disable automatic logon to improve security"
+        },
+        "allowedValues": [
+          "0",
+          "1"
+        ],
+        "defaultValue": "1"
+      },
+      "EnableScreenSaver": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MSS: Enable screen saver",
+          "description": "Enable screen saver for security"
+        },
+        "allowedValues": [
+          "0",
+          "1"
+        ],
+        "defaultValue": "1"
+      },
+      "DisableNetworkBridgeInstall": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MSS: Disable network bridge installation",
+          "description": "Disable network bridge installation"
+        },
+        "allowedValues": [
+          "0",
+          "1"
+        ],
+        "defaultValue": "1"
+      },
+      "EnableSafeDLLSearchMode": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MSS: Enable safe DLL search mode",
+          "description": "Enable safe DLL search mode"
+        },
+        "allowedValues": [
+          "0",
+          "1"
+        ],
+        "defaultValue": "1"
+      },
+      "WarningLevel": {
+        "type": "String",
+        "metadata": {
+          "displayName": "MSS: Warning level",
+          "description": "Set warning level for security events"
+        },
+        "allowedValues": [
+          "0",
+          "1",
+          "2"
+        ],
+        "defaultValue": "1"
       }
     },
     "version": "3.0.0",
@@ -36,7 +97,14 @@
       ],
       "guestConfiguration": {
         "name": "AzureBaseline_AdminstrativeTemplatesMSSLegacy",
-        "version": "1.*"
+        "version": "1.*",
+        "configurationParameter": {
+          "DisableAutomaticLogon": "MSS: Disable automatic logon;ExpectedValue",
+          "EnableScreenSaver": "MSS: Enable screen saver;ExpectedValue",
+          "DisableNetworkBridgeInstall": "MSS: Disable network bridge installation;ExpectedValue",
+          "EnableSafeDLLSearchMode": "MSS: Enable safe DLL search mode;ExpectedValue",
+          "WarningLevel": "MSS: Warning level;ExpectedValue"
+        }
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'Administrative Templates - MSS (Legacy)' for automatic logon, screen saver, network behavior, safe DLL, and event log. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

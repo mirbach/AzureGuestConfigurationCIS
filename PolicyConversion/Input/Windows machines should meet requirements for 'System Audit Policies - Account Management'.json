@@ -25,6 +25,76 @@
           "Disabled"
         ],
         "defaultValue": "AuditIfNotExists"
+      },
+      "AuditApplicationGroupManagement": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Audit Application Group Management",
+          "description": "Audit events related to application group management"
+        },
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure", 
+          "Success and Failure"
+        ],
+        "defaultValue": "Success and Failure"
+      },
+      "AuditSecurityGroupManagement": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Audit Security Group Management",
+          "description": "Audit events related to security group management"
+        },
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
+        "defaultValue": "Success and Failure"
+      },
+      "AuditUserAccountManagement": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Audit User Account Management",
+          "description": "Audit events related to user account management"
+        },
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
+        "defaultValue": "Success and Failure"
+      },
+      "AuditDistributionGroupManagement": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Audit Distribution Group Management",
+          "description": "Audit events related to distribution group management"
+        },
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
+        "defaultValue": "Success and Failure"
+      },
+      "AuditOtherAccountManagementEvents": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Audit Other Account Management Events",
+          "description": "Audit other account management events"
+        },
+        "allowedValues": [
+          "No Auditing",
+          "Success",
+          "Failure",
+          "Success and Failure"
+        ],
+        "defaultValue": "Success and Failure"
       }
     },
     "version": "3.0.0",
@@ -36,7 +106,14 @@
       ],
       "guestConfiguration": {
         "name": "AzureBaseline_SystemAuditPoliciesAccountManagement",
-        "version": "1.*"
+        "version": "1.*",
+        "configurationParameter": {
+          "AuditApplicationGroupManagement": "Audit Application Group Management;ExpectedValue",
+          "AuditSecurityGroupManagement": "Audit Security Group Management;ExpectedValue",
+          "AuditUserAccountManagement": "Audit User Account Management;ExpectedValue",
+          "AuditDistributionGroupManagement": "Audit Distribution Group Management;ExpectedValue",
+          "AuditOtherAccountManagementEvents": "Audit Other Account Management Events;ExpectedValue"
+        }
       }
     },
     "description": "Windows machines should have the specified Group Policy settings in the category 'System Audit Policies - Account Management' for auditing application, security, and user group management, and other management events. This policy requires that the Guest Configuration prerequisites have been deployed to the policy assignment scope. For details, visit https://aka.ms/gcpol.",

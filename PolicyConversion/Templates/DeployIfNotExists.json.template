@@ -22,19 +22,6 @@
     },
     "version": "1.0.0",
     "parameters": {
-      "IncludeArcMachines": {
-        "type": "String",
-        "metadata": {
-          "displayName": "Include Arc connected servers",
-          "description": "By selecting this option, you agree to be charged monthly per Arc connected machine.",
-          "portalReview": "true"
-        },
-        "allowedValues": [
-          "true",
-          "false"
-        ],
-        "defaultValue": "false"
-      }{POLICY_PARAMETERS_COMMA}
 {POLICY_PARAMETERS}
       "assignmentType": {
         "type": "String",
@@ -225,19 +212,13 @@
             ]
           },
           {
-            "allOf": [
+            "anyOf": [
               {
-                "value": "[parameters('IncludeArcMachines')]",
-                "equals": "true"
-              },
-              {
-                "anyOf": [
+                "allOf": [
                   {
-                    "allOf": [
-                      {
-                        "field": "type",
-                        "equals": "Microsoft.HybridCompute/machines"
-                      },
+                    "field": "type",
+                    "equals": "Microsoft.HybridCompute/machines"
+                  },
                       {
                         "field": "Microsoft.HybridCompute/machines/osType",
                         "like": "windows*"
