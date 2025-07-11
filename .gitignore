@@ -1,0 +1,42 @@
+# Azure Guest Configuration CIS - Git Ignore File
+
+# Exclude the PolicyConversion Output folder - contains generated policies and DSC packages
+PolicyConversion/Output/
+
+# Exclude any generated DSC packages
+*.zip
+
+# Exclude PowerShell module cache
+*.nupkg
+
+# Exclude temporary files
+*.tmp
+*.temp
+
+# Exclude log files
+*.log
+
+# Exclude Azure authentication cache
+.azure/
+
+# Exclude VS Code settings (optional - uncomment if you don't want to share VS Code settings)
+# .vscode/
+
+# Exclude any backup files
+*.bak
+*.backup
+
+# Exclude any personal configuration overrides (if you create them)
+azure.config.local
+
+# Exclude any test results or coverage reports
+TestResults/
+coverage/
+
+# Exclude any compiled binaries or executables
+*.exe
+*.dll
+*.pdb
+
+# Exclude PowerShell compiled modules
+*.psm1.cache

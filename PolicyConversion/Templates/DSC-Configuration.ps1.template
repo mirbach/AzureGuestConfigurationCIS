@@ -5,7 +5,7 @@ Configuration {CONFIGURATION_NAME}
 {PARAMETERS}
     )
 
-    Import-DscResource -ModuleName '{DSC_MODULE_NAME}'
+{DSC_IMPORTS}
 
     Node localhost
     {
