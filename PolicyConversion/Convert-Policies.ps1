@@ -124,9 +124,10 @@ function Get-PolicyParameters {
     
     $parameters = @()
     if ($Policy.properties.parameters) {
+        $allParams = @()
         foreach ($param in $Policy.properties.parameters.PSObject.Properties) {
-            if ($param.Name -notmatch "^(IncludeArcMachines|effect)$") {
-                $parameters += @{
+            if ($param.Name -notmatch "^(IncludeArcMachines|effect|assignmentType)$") {
+                $allParams += @{
                     Name = $param.Name
                     Type = $param.Value.type
                     DisplayName = $param.Value.metadata.displayName
@@ -135,6 +136,14 @@ function Get-PolicyParameters {
                     DefaultValue = $param.Value.defaultValue
                 }
             }
+        }
+        
+        # Limit to 17 parameters (leaving room for 3 essential parameters: IncludeArcMachines, assignmentType, effect)
+        if ($allParams.Count -gt 17) {
+            Write-Host "  Policy has $($allParams.Count) parameters, limiting to 17 (Azure Policy max is 20)" -ForegroundColor Yellow
+            $parameters = $allParams | Select-Object -First 17
+        } else {
+            $parameters = $allParams
         }
     }
     return $parameters
@@ -189,7 +198,8 @@ function New-DeployIfNotExistsPolicy {
     param(
         [PSObject]$OriginalPolicy,
         [string]$ConfigurationName,
-        [array]$Parameters
+        [array]$Parameters,
+        [string]$PolicyName
     )
     
     $template = Get-Content (Join-Path $templatesPath "DeployIfNotExists.json.template") -Raw
@@ -218,7 +228,13 @@ function New-DeployIfNotExistsPolicy {
             $allowedValues = ($param.AllowedValues | ForEach-Object { "`"$_`"" }) -join ", "
             $policyParameters += "        `"allowedValues`": [$allowedValues],`r`n"
         }
-        $policyParameters += "        `"defaultValue`": `"$($param.DefaultValue)`"`r`n"
+        # Properly escape the default value for JSON
+        if ($param.DefaultValue -ne $null) {
+            $escapedDefaultValue = $param.DefaultValue -replace '\\', '\\\\' -replace '"', '\"' -replace "`r", '' -replace "`n", ''
+            $policyParameters += "        `"defaultValue`": `"$escapedDefaultValue`"`r`n"
+        } else {
+            $policyParameters += "        `"defaultValue`": `"`"`r`n"
+        }
         $policyParameters += "      },`r`n"
     }
     $policyParameters = $policyParameters.TrimEnd(",`r`n")
@@ -226,13 +242,15 @@ function New-DeployIfNotExistsPolicy {
     # Generate configuration parameters
     $configurationParameters = ""
     foreach ($param in $Parameters) {
-        $configurationParameters += "          `"$($param.Name)`": `"[TODO:DSCResource]ResourceName;PropertyName`",`r`n"
+        $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
+        $configurationParameters += "          `"$($param.Name)`": `"$dscMapping`",`r`n"
     }
     $configurationParameters = $configurationParameters.TrimEnd(",`r`n")
     
     # Generate other template sections
     $parameterHashConcat = ($Parameters | ForEach-Object { 
-        "'[TODO:DSCResource]ResourceName;PropertyName', '=', parameters('$($_.Name)')" 
+        $dscMapping = Get-DSCParameterMapping -ParameterName $_.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
+        "'$dscMapping', '=', parameters('$($_.Name)')" 
     }) -join ", ',', "
     
     $deploymentParameters = ""
@@ -249,7 +267,8 @@ function New-DeployIfNotExistsPolicy {
         $templateParameters += "                  },`r`n"
         
         $configurationParameterArray += "                          {`r`n"
-        $configurationParameterArray += "                            `"name`": `"[TODO:DSCResource]ResourceName;PropertyName`",`r`n"
+        $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
+        $configurationParameterArray += "                            `"name`": `"$dscMapping`",`r`n"
         $configurationParameterArray += "                            `"value`": `"[parameters('$($param.Name)')]`"`r`n"
         $configurationParameterArray += "                          },`r`n"
     }
@@ -258,6 +277,47 @@ function New-DeployIfNotExistsPolicy {
     $templateParameters = $templateParameters.TrimEnd(",`r`n")
     $configurationParameterArray = $configurationParameterArray.TrimEnd(",`r`n")
     
+    # Handle comma placement for deployment parameters
+    # Only need a comma after configurationName if there are deployment parameters
+    if ($Parameters.Count -gt 0) {
+        $deploymentParametersComma = ","
+        # When there are deployment parameters, add a newline before the first parameter
+        if ($deploymentParameters -and -not $deploymentParameters.StartsWith("`r`n")) {
+            $deploymentParameters = "`r`n" + $deploymentParameters
+        }
+        # Add comma after the last deployment parameter since assignmentType follows
+        $deploymentParameters = $deploymentParameters + ",`r`n"
+    } else {
+        $deploymentParametersComma = ","
+    }
+    
+    # Handle comma placement for template parameters
+    # Always need a comma before assignmentType
+    if ($Parameters.Count -gt 0) {
+        # When there are template parameters, add a newline before the first parameter and comma after
+        if ($templateParameters -and -not $templateParameters.StartsWith("`r`n")) {
+            $templateParameters = "`r`n" + $templateParameters
+        }
+        # Add comma after template parameters since assignmentType follows
+        $templateParameters = $templateParameters + ",`r`n"
+    } else {
+        # When there are no template parameters, we still need the existing comma
+        $templateParameters = ""
+    }
+    
+    # Handle comma placement for parameters
+    # Always need a comma after IncludeArcMachines since assignmentType follows
+    $policyParametersComma = ","
+    
+    # When there are parameters, add a newline before the first parameter
+    if ($Parameters.Count -gt 0) {
+        if ($policyParameters -and -not $policyParameters.StartsWith("`r`n")) {
+            $policyParameters = "`r`n" + $policyParameters
+        }
+        # Add comma after the last user parameter since assignmentType follows
+        $policyParameters = $policyParameters + ",`r`n"
+    }
+    
     # Replace placeholders
     $content = $template -replace "{DISPLAY_NAME}", $displayName
     $content = $content -replace "{DESCRIPTION}", $description
@@ -265,11 +325,13 @@ function New-DeployIfNotExistsPolicy {
     $content = $content -replace "{CONFIGURATION_PARAMETERS}", $configurationParameters
     $content = $content -replace "{CONTENT_URI}", "https://saserverhardeningdkleac.blob.core.windows.net/guestconfiguration/$ConfigurationName.zip"
     $content = $content -replace "{CONTENT_HASH}", "PLACEHOLDER_HASH"
+    $content = $content -replace "{POLICY_PARAMETERS_COMMA}", $policyParametersComma
     $content = $content -replace "{POLICY_PARAMETERS}", $policyParameters
     $content = $content -replace "{PARAMETER_HASH_CONCAT}", $parameterHashConcat
     $content = $content -replace "{DEPLOYMENT_PARAMETERS}", $deploymentParameters
     $content = $content -replace "{TEMPLATE_PARAMETERS}", $templateParameters
     $content = $content -replace "{CONFIGURATION_PARAMETER_ARRAY}", $configurationParameterArray
+    $content = $content -replace "{DEPLOYMENT_PARAMETERS_COMMA}", $deploymentParametersComma
     
     return $content
 }
@@ -381,6 +443,75 @@ function New-TestConfiguration {
     return $content
 }
 
+# Function to map policy parameter names to DSC resource parameter names
+function Get-DSCParameterMapping {
+    param(
+        [string]$ParameterName,
+        [string]$PolicyName,
+        [object]$InputPolicy
+    )
+    
+    # First, try to get the exact mapping from the input policy's configurationParameter
+    if ($InputPolicy.properties.metadata.guestConfiguration.configurationParameter) {
+        foreach ($property in $InputPolicy.properties.metadata.guestConfiguration.configurationParameter.PSObject.Properties) {
+            if ($property.Name -eq $ParameterName) {
+                Write-Host "  Found exact mapping for $ParameterName -> $($property.Value)" -ForegroundColor Green
+                return $property.Value
+            }
+        }
+    }
+    
+    # Fallback to algorithmic mapping (for completeness, but should not be needed)
+    Write-Warning "No exact mapping found for parameter $ParameterName in policy $PolicyName, using fallback"
+    
+    # Security Options mapping
+    if ($PolicyName -like "*Security Options*") {
+        # Convert parameter name to Security Option property name
+        $propertyName = $ParameterName
+        
+        # Handle specific mappings for Security Options
+        $mappings = @{
+            'ShutdownAllowSystemToBeShutDownWithoutHavingToLogOn' = 'Shutdown_Allow_system_to_be_shut_down_without_having_to_log_on'
+            'ShutdownClearVirtualMemoryPagefile' = 'Shutdown_Clear_virtual_memory_pagefile'
+            # Add more mappings as needed based on existing DSC configurations
+        }
+        
+        if ($mappings.ContainsKey($ParameterName)) {
+            return "SecurityOption;$($mappings[$ParameterName])"
+        } else {
+            # Fallback: convert camelCase to snake_case for Security Options
+            $snakeCase = $ParameterName -creplace '([A-Z])', '_$1'
+            $snakeCase = $snakeCase.TrimStart('_').ToLower()
+            return "SecurityOption;$snakeCase"
+        }
+    }
+    
+    # Audit Policies mapping
+    if ($PolicyName -like "*Audit Policies*") {
+        # Convert to AuditPolicy resource parameter
+        $auditProperty = $ParameterName -replace '^Audit', ''
+        return "AuditPolicy;$auditProperty"
+    }
+    
+    # User Rights Assignment mapping
+    if ($PolicyName -like "*User Rights*") {
+        return "UserRightsAssignment;$ParameterName"
+    }
+    
+    # Registry-based policies (Administrative Templates, Windows Components, etc.)
+    if ($PolicyName -like "*Administrative Templates*" -or $PolicyName -like "*Windows Components*" -or $PolicyName -like "*Windows Firewall*") {
+        return "Registry;$ParameterName"
+    }
+    
+    # Security Settings mapping
+    if ($PolicyName -like "*Security Settings*") {
+        return "SecurityPolicy;$ParameterName"
+    }
+    
+    # Default fallback
+    return "Registry;$ParameterName"
+}
+
 # Main conversion function
 function Convert-Policy {
     param(
@@ -411,7 +542,7 @@ function Convert-Policy {
     $auditPolicy | ConvertTo-Json -Depth 20 | Set-Content (Join-Path $policyOutputDir "AuditIfNotExists - $PolicyName.json")
     
     # Generate DeployIfNotExists policy
-    $deployPolicy = New-DeployIfNotExistsPolicy -OriginalPolicy $originalPolicy -ConfigurationName $configurationName -Parameters $parameters
+    $deployPolicy = New-DeployIfNotExistsPolicy -OriginalPolicy $originalPolicy -ConfigurationName $configurationName -Parameters $parameters -PolicyName $policyName
     $deployPolicy | Set-Content (Join-Path $policyOutputDir "DeployIfNotExists - $PolicyName.json")
     
     # Generate DSC configuration

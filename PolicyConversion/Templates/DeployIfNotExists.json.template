@@ -34,7 +34,7 @@
           "false"
         ],
         "defaultValue": "false"
-      },
+      }{POLICY_PARAMETERS_COMMA}
 {POLICY_PARAMETERS}
       "assignmentType": {
         "type": "String",
@@ -239,7 +239,7 @@
                         "equals": "Microsoft.HybridCompute/machines"
                       },
                       {
-                        "field": "Microsoft.HybridCompute/imageOffer",
+                        "field": "Microsoft.HybridCompute/machines/osType",
                         "like": "windows*"
                       }
                     ]
@@ -293,7 +293,7 @@
                 },
                 "configurationName": {
                   "value": "{CONFIGURATION_NAME}"
-                },
+                }{DEPLOYMENT_PARAMETERS_COMMA}
 {DEPLOYMENT_PARAMETERS}
                 "assignmentType": {
                   "value": "[parameters('assignmentType')]"
