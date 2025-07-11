@@ -293,7 +293,10 @@ function New-DSCConfiguration {
     $dscModules = @()
     
     foreach ($param in $Parameters) {
-        $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $null
+        # Skip empty or null parameter names
+        if (-not $param.Name -or $param.Name.Trim() -eq "") {
+            continue
+        }
         
         if ($PolicyName -like "*System Audit Policies*") {
             # Use AuditPolicyDsc module for audit policies
@@ -616,13 +619,15 @@ function New-DeployIfNotExistsPolicy {
     # Generate configuration parameters
     $configurationParameters = ""
     foreach ($param in $Parameters) {
-        $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
-        $configurationParameters += "          `"$($param.Name)`": `"$dscMapping`",`r`n"
+        if ($param.Name -and $param.Name.Trim() -ne "") {
+            $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
+            $configurationParameters += "          `"$($param.Name)`": `"$dscMapping`",`r`n"
+        }
     }
     $configurationParameters = $configurationParameters.TrimEnd(",`r`n")
     
     # Generate other template sections
-    $parameterHashConcat = ($Parameters | ForEach-Object { 
+    $parameterHashConcat = ($Parameters | Where-Object { $_.Name -and $_.Name.Trim() -ne "" } | ForEach-Object { 
         $dscMapping = Get-DSCParameterMapping -ParameterName $_.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
         "'$dscMapping', '=', parameters('$($_.Name)')" 
     }) -join ", ',', "
@@ -632,19 +637,21 @@ function New-DeployIfNotExistsPolicy {
     $configurationParameterArray = ""
     
     foreach ($param in $Parameters) {
-        $deploymentParameters += "                `"$($param.Name)`": {`r`n"
-        $deploymentParameters += "                  `"value`": `"[parameters('$($param.Name)')]`"`r`n"
-        $deploymentParameters += "                },`r`n"
-        
-        $templateParameters += "                  `"$($param.Name)`": {`r`n"
-        $templateParameters += "                    `"type`": `"string`"`r`n"
-        $templateParameters += "                  },`r`n"
-        
-        $configurationParameterArray += "                          {`r`n"
-        $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
-        $configurationParameterArray += "                            `"name`": `"$dscMapping`",`r`n"
-        $configurationParameterArray += "                            `"value`": `"[parameters('$($param.Name)')]`"`r`n"
-        $configurationParameterArray += "                          },`r`n"
+        if ($param.Name -and $param.Name.Trim() -ne "") {
+            $deploymentParameters += "                `"$($param.Name)`": {`r`n"
+            $deploymentParameters += "                  `"value`": `"[parameters('$($param.Name)')]`"`r`n"
+            $deploymentParameters += "                },`r`n"
+            
+            $templateParameters += "                  `"$($param.Name)`": {`r`n"
+            $templateParameters += "                    `"type`": `"string`"`r`n"
+            $templateParameters += "                  },`r`n"
+            
+            $configurationParameterArray += "                          {`r`n"
+            $dscMapping = Get-DSCParameterMapping -ParameterName $param.Name -PolicyName $PolicyName -InputPolicy $OriginalPolicy
+            $configurationParameterArray += "                            `"name`": `"$dscMapping`",`r`n"
+            $configurationParameterArray += "                            `"value`": `"[parameters('$($param.Name)')]`"`r`n"
+            $configurationParameterArray += "                          },`r`n"
+        }
     }
     
     $deploymentParameters = $deploymentParameters.TrimEnd(",`r`n")
