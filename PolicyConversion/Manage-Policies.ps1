@@ -223,7 +223,8 @@ function Remove-PolicyAssignments {
 function Build-DSCPackages {
     param(
         [string]$OutputPath,
-        [string]$SpecificPolicy = $null
+        [string]$SpecificPolicy = $null,
+        [switch]$Force
     )
     
     Write-Host "=== Building DSC Packages ===" -ForegroundColor Magenta
@@ -275,7 +276,8 @@ function Build-DSCPackages {
                                 Write-Host "  ✓ DSC configuration compiled successfully" -ForegroundColor Green
                                 
                                 # Create the package using the .mof file
-                                $packagePath = New-GuestConfigurationPackage -Name $dscConfigDir.Name -Configuration $mofFile.FullName -Path $dscConfigDir.FullName -Force:$Force
+                                $packageResult = New-GuestConfigurationPackage -Name $dscConfigDir.Name -Configuration $mofFile.FullName -Path $dscConfigDir.FullName -Force:$Force
+                                $packagePath = $packageResult.Path
                                 
                                 if ($packagePath -and (Test-Path $packagePath)) {
                                     Write-Host "  ✓ Package created: $packagePath" -ForegroundColor Green
@@ -508,7 +510,7 @@ if ($DeployPolicies) {
 } elseif ($RemoveAssignments) {
     Remove-PolicyAssignments -SpecificPolicy $PolicyName
 } elseif ($BuildDSCPackages) {
-    Build-DSCPackages -OutputPath $outputPath -SpecificPolicy $PolicyName
+    Build-DSCPackages -OutputPath $outputPath -SpecificPolicy $PolicyName -Force:$Force
 } elseif ($UpdateHashes) {
     Update-PolicyHashes -OutputPath $outputPath -SpecificPolicy $PolicyName
 } elseif ($UploadPackages) {
