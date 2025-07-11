@@ -371,13 +371,13 @@ function New-DSCConfiguration {
                 # Handle value conversion for AccountPolicy
                 if ($policyProperty -eq "Password_must_meet_complexity_requirements") {
                     $dscResources += "            $policyProperty = switch (`$$($param.Name)) {`r`n"
-                    $dscResources += "                'Enabled' { `$true }`r`n"
-                    $dscResources += "                'Disabled' { `$false }`r`n"
-                    $dscResources += "                'True' { `$true }`r`n"
-                    $dscResources += "                'False' { `$false }`r`n"
-                    $dscResources += "                '1' { `$true }`r`n"
-                    $dscResources += "                '0' { `$false }`r`n"
-                    $dscResources += "                default { [bool]`$$($param.Name) }`r`n"
+                    $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                    $dscResources += "                'True' { 'Enabled' }`r`n"
+                    $dscResources += "                'False' { 'Disabled' }`r`n"
+                    $dscResources += "                '1' { 'Enabled' }`r`n"
+                    $dscResources += "                '0' { 'Disabled' }`r`n"
+                    $dscResources += "                default { if ([bool]`$$($param.Name)) { 'Enabled' } else { 'Disabled' } }`r`n"
                     $dscResources += "            }`r`n"
                 } elseif ($policyProperty -like "*age*" -or $policyProperty -like "*history*" -or $policyProperty -like "*length*") {
                     # These should be numeric values
@@ -504,10 +504,10 @@ function New-DSCConfiguration {
                     'Network_security_LAN_Manager_authentication_level' {
                         $dscResources += "                '0' { 'Send LM & NTLM responses' }`r`n"
                         $dscResources += "                '1' { 'Send LM & NTLM - use NTLMv2 session security if negotiated' }`r`n"
-                        $dscResources += "                '2' { 'Send NTLM response only' }`r`n"
-                        $dscResources += "                '3' { 'Send NTLMv2 response only' }`r`n"
-                        $dscResources += "                '4' { 'Send NTLMv2 response only. Refuse LM' }`r`n"
-                        $dscResources += "                '5' { 'Send NTLMv2 response only. Refuse LM & NTLM' }`r`n"
+                        $dscResources += "                '2' { 'Send NTLM responses only' }`r`n"
+                        $dscResources += "                '3' { 'Send NTLMv2 responses only' }`r`n"
+                        $dscResources += "                '4' { 'Send NTLMv2 responses only. Refuse LM' }`r`n"
+                        $dscResources += "                '5' { 'Send NTLMv2 responses only. Refuse LM & NTLM' }`r`n"
                     }
                     'Network_security_LDAP_client_signing_requirements' {
                         $dscResources += "                '0' { 'None' }`r`n"
@@ -548,25 +548,101 @@ function New-DSCConfiguration {
                         $dscResources += "                'Disabled' { 'Disabled' }`r`n"
                         $dscResources += "                'Enabled' { 'Enabled' }`r`n"
                     }
+                    'System_settings_Use_Certificate_Rules_on_Windows_Executables_for_Software_Restriction_Policies' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Shutdown_Allow_system_to_be_shut_down_without_having_to_log_on' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Shutdown_Clear_virtual_memory_pagefile' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_client_Digitally_sign_communications_always' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_client_Digitally_sign_communications_if_server_agrees' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_client_Send_unencrypted_password_to_third_party_SMB_servers' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_server_Digitally_sign_communications_always' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_server_Digitally_sign_communications_if_client_agrees' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_server_Disconnect_clients_when_logon_hours_expire' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Network_security_Configure_encryption_types_allowed_for_Kerberos' {
+                        $dscResources += "                '2147483644' { 'AES128_HMAC_SHA1, AES256_HMAC_SHA1, FUTURE' }`r`n"
+                        $dscResources += "                '2147483640' { 'AES128_HMAC_SHA1, AES256_HMAC_SHA1' }`r`n"
+                        $dscResources += "                '24' { 'AES128_HMAC_SHA1, AES256_HMAC_SHA1' }`r`n"
+                        $dscResources += "                default { [uint32]`$$($param.Name) }`r`n"
+                    }
+                    'Network_security_Minimum_session_security_for_NTLM_SSP_based_including_secure_RPC_clients' {
+                        $dscResources += "                '537395200' { 'Both options checked' }`r`n"
+                        $dscResources += "                '536870912' { 'Require NTLMv2 session security' }`r`n"
+                        $dscResources += "                '524288' { 'Require 128-bit encryption' }`r`n"
+                        $dscResources += "                default { 'Both options checked' }`r`n"
+                    }
+                    'Network_security_Minimum_session_security_for_NTLM_SSP_based_including_secure_RPC_servers' {
+                        $dscResources += "                '537395200' { 'Both options checked' }`r`n"
+                        $dscResources += "                '536870912' { 'Require NTLMv2 session security' }`r`n"
+                        $dscResources += "                '524288' { 'Require 128-bit encryption' }`r`n"
+                        $dscResources += "                default { 'Both options checked' }`r`n"
+                    }
                     default {
-                        # For other SecurityOption parameters, try default mappings
-                        if ($propertyName -match '_account_status$') {
-                            $dscResources += "                '0' { 'Disabled' }`r`n"
-                            $dscResources += "                '1' { 'Enabled' }`r`n"
-                            $dscResources += "                'Disabled' { 'Disabled' }`r`n"
-                            $dscResources += "                'Enabled' { 'Enabled' }`r`n"
-                        } elseif ($propertyName -match 'User_Account_Control') {
+                        # For other SecurityOption parameters, try default mappings based on property name patterns
+                        if ($propertyName -match '_account_status$' -or 
+                            $propertyName -match 'User_Account_Control' -or 
+                            $propertyName -match '^Shutdown_' -or 
+                            $propertyName -match '^Audit_' -or 
+                            $propertyName -match '^System_' -or 
+                            $propertyName -match '^Recovery_' -or 
+                            $propertyName -match '^Microsoft_network_.*_(always|if_)' -or 
+                            $propertyName -match '^Network_access_.*_(anonymous|restrict)' -or 
+                            $propertyName -match '^Interactive_logon_.*_(require|display)') {
+                            # These are typically boolean properties expecting Enabled/Disabled
                             $dscResources += "                '0' { 'Disabled' }`r`n"
                             $dscResources += "                '1' { 'Enabled' }`r`n"
                             $dscResources += "                'Disabled' { 'Disabled' }`r`n"
                             $dscResources += "                'Enabled' { 'Enabled' }`r`n"
                         } else {
+                            # For properties that don't match boolean patterns, pass through the value
                             $dscResources += "                default { `$$($param.Name) }`r`n"
                         }
                     }
                 }
                 
-                $dscResources += "                default { `$$($param.Name) }`r`n"
                 $dscResources += "            }`r`n"
                 $dscResources += "        }`r`n`r`n"
             }
