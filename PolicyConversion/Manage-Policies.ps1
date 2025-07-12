@@ -275,8 +275,8 @@ function Build-DSCPackages {
                             if ($mofFile) {
                                 Write-Host "  ✓ DSC configuration compiled successfully" -ForegroundColor Green
                                 
-                                # Create the package using the .mof file
-                                $packageResult = New-GuestConfigurationPackage -Name $dscConfigDir.Name -Configuration $mofFile.FullName -Path $dscConfigDir.FullName -Force:$Force
+                                # Create the package using the .mof file (always use Force to avoid overwrite warnings)
+                                $packageResult = New-GuestConfigurationPackage -Name $dscConfigDir.Name -Configuration $mofFile.FullName -Path $dscConfigDir.FullName -Force
                                 $packagePath = $packageResult.Path
                                 
                                 if ($packagePath -and (Test-Path $packagePath)) {

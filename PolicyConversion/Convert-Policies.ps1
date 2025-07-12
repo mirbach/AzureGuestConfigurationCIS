@@ -346,6 +346,32 @@ function New-DSCConfiguration {
             $dscResources += "            AuditFlag = 'Failure'`r`n"
             $dscResources += "            Ensure = 'Absent'`r`n"
             $dscResources += "        }`r`n`r`n"
+        } elseif ($PolicyName -like "*Security Options - Microsoft Network Server*") {
+            # Add hardcoded Microsoft Network Server configuration
+            if ($dscModules -notcontains "PSDscResources") { $dscModules += "PSDscResources" }
+            $dscResources += "        # Hardcoded Microsoft Network Server configuration`r`n"
+            $dscResources += "        Registry 'DisableSMBServerV1'`r`n"
+            $dscResources += "        {`r`n"
+            $dscResources += "            Key = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'`r`n"
+            $dscResources += "            ValueName = 'SMB1'`r`n"
+            $dscResources += "            ValueType = 'DWord'`r`n"
+            $dscResources += "            ValueData = '0'`r`n"
+            $dscResources += "            Ensure = 'Present'`r`n"
+            $dscResources += "        }`r`n`r`n"
+        } elseif ($PolicyName -like "*Security Options - Interactive Logon*") {
+            # Add hardcoded Interactive Logon configuration
+            if ($dscModules -notcontains "SecurityPolicyDsc") { $dscModules += "SecurityPolicyDsc" }
+            $dscResources += "        # Hardcoded Interactive Logon configuration`r`n"
+            $dscResources += "        SecurityOption 'InteractiveLogonDoNotDisplayLastUserName'`r`n"
+            $dscResources += "        {`r`n"
+            $dscResources += "            Name = 'InteractiveLogonDoNotDisplayLastUserName'`r`n"
+            $dscResources += "            Interactive_logon_Do_not_display_last_user_name = 'Enabled'`r`n"
+            $dscResources += "        }`r`n`r`n"
+            $dscResources += "        SecurityOption 'InteractiveLogonDoNotRequireCtrlAltDel'`r`n"
+            $dscResources += "        {`r`n"
+            $dscResources += "            Name = 'InteractiveLogonDoNotRequireCtrlAltDel'`r`n"
+            $dscResources += "            Interactive_logon_Do_not_require_CTRL_ALT_DEL = 'Disabled'`r`n"
+            $dscResources += "        }`r`n`r`n"
         } else {
             # Add a comment for other policies with no parameters
             $dscResources += "        # No configuration parameters found for this policy`r`n"
