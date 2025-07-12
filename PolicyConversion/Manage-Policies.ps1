@@ -39,8 +39,24 @@ param(
 # Load Azure configuration
 $azureConfigFile = Join-Path $PSScriptRoot "..\azure.config"
 if (Test-Path $azureConfigFile) {
-    . $azureConfigFile
+    # Read the config file content and execute it to set variables
+    $configContent = Get-Content $azureConfigFile -Raw
+    Invoke-Expression $configContent
     Write-Host "Loaded Azure configuration from azure.config" -ForegroundColor Green
+    
+    # Verify variables were loaded
+    if (-not $AzureSubscriptionId) {
+        Write-Warning "AzureSubscriptionId not found in azure.config"
+    }
+    if (-not $AzureResourceGroupName) {
+        Write-Warning "AzureResourceGroupName not found in azure.config"
+    }
+    if (-not $AzureStorageAccountName) {
+        Write-Warning "AzureStorageAccountName not found in azure.config"
+    }
+    if (-not $AzureStorageContainerName) {
+        Write-Warning "AzureStorageContainerName not found in azure.config"
+    }
 } else {
     Write-Warning "Azure configuration file not found. Please create azure.config with required variables."
     return
@@ -413,7 +429,11 @@ function Update-PolicyHashes {
 function Upload-DSCPackages {
     param(
         [string]$OutputPath,
-        [string]$SpecificPolicy = $null
+        [string]$SpecificPolicy = $null,
+        [string]$SubscriptionId,
+        [string]$ResourceGroupName,
+        [string]$StorageAccountName,
+        [string]$StorageContainerName
     )
     
     Write-Host "=== Uploading DSC Packages to Azure Storage ===" -ForegroundColor Magenta
@@ -432,19 +452,19 @@ function Upload-DSCPackages {
         Set-AzContext -SubscriptionId $SubscriptionId | Out-Null
         
         # Get storage account
-        $storageAccount = Get-AzStorageAccount -ResourceGroupName $AzureResourceGroupName -Name $AzureStorageAccountName -ErrorAction SilentlyContinue
+        $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName -ErrorAction SilentlyContinue
         if (-not $storageAccount) {
-            Write-Error "Storage account '$AzureStorageAccountName' not found in resource group '$AzureResourceGroupName'"
+            Write-Error "Storage account '$StorageAccountName' not found in resource group '$ResourceGroupName'"
             return
         }
         
         $ctx = $storageAccount.Context
         
         # Ensure container exists
-        $container = Get-AzStorageContainer -Name $AzureStorageContainerName -Context $ctx -ErrorAction SilentlyContinue
+        $container = Get-AzStorageContainer -Name $StorageContainerName -Context $ctx -ErrorAction SilentlyContinue
         if (-not $container) {
-            Write-Host "Creating storage container: $AzureStorageContainerName" -ForegroundColor Yellow
-            New-AzStorageContainer -Name $AzureStorageContainerName -Context $ctx -Permission Blob | Out-Null
+            Write-Host "Creating storage container: $StorageContainerName" -ForegroundColor Yellow
+            New-AzStorageContainer -Name $StorageContainerName -Context $ctx -Permission Blob | Out-Null
         }
         
         $policyDirs = if ($SpecificPolicy) {
@@ -452,6 +472,10 @@ function Upload-DSCPackages {
         } else {
             Get-ChildItem -Path $OutputPath -Directory
         }
+        
+        # Initialize counters
+        $uploadedCount = 0
+        $totalPolicies = $policyDirs.Count
         
         foreach ($policyDir in $policyDirs) {
             Write-Host "Processing policy: $($policyDir.Name)" -ForegroundColor Cyan
@@ -468,11 +492,12 @@ function Upload-DSCPackages {
                             $blobName = $packageFile.Name
                             Write-Host "  Uploading: $blobName" -ForegroundColor Yellow
                             
-                            $blob = Set-AzStorageBlobContent -File $packageFile.FullName -Container $AzureStorageContainerName -Blob $blobName -Context $ctx -Force
+                            $blob = Set-AzStorageBlobContent -File $packageFile.FullName -Container $StorageContainerName -Blob $blobName -Context $ctx -Force
                             
                             if ($blob) {
                                 Write-Host "  ✓ Uploaded successfully" -ForegroundColor Green
                                 Write-Host "    URL: $($blob.ICloudBlob.StorageUri.PrimaryUri)" -ForegroundColor Gray
+                                $uploadedCount++
                             } else {
                                 Write-Warning "  ✗ Upload failed for $blobName"
                             }
@@ -492,6 +517,7 @@ function Upload-DSCPackages {
         }
         
         Write-Host "=== DSC Package Upload Complete ===" -ForegroundColor Green
+        Write-Host "Successfully uploaded $uploadedCount of $totalPolicies packages to Azure Storage" -ForegroundColor Cyan
         
     } catch {
         Write-Error "Failed to upload DSC packages: $($_.Exception.Message)"
@@ -514,7 +540,7 @@ if ($DeployPolicies) {
 } elseif ($UpdateHashes) {
     Update-PolicyHashes -OutputPath $outputPath -SpecificPolicy $PolicyName
 } elseif ($UploadPackages) {
-    Upload-DSCPackages -OutputPath $outputPath -SpecificPolicy $PolicyName
+    Upload-DSCPackages -OutputPath $outputPath -SpecificPolicy $PolicyName -SubscriptionId $SubscriptionId -ResourceGroupName $ResourceGroupName -StorageAccountName $AzureStorageAccountName -StorageContainerName $AzureStorageContainerName
 } else {
     Write-Host "Azure Guest Configuration Policy Management Tool" -ForegroundColor Magenta
     Write-Host ""
