@@ -19,7 +19,7 @@ applyTo: '**'
 - Do not create separate fix scripts
 - Use convert-policies.ps1 to convert policies
 - When issues are found:
-  1. Delete the output policies
+  1. Delete the output policies folder
   2. Fix the original conversion script
   3. Reconvert the policies using the updated script
 - Always update the original script when making corrections

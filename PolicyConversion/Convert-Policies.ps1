@@ -297,16 +297,35 @@ function New-DSCConfiguration {
     $dscResources = ""
     $dscModules = @()
     
-    foreach ($param in $Parameters) {
-        # Skip empty or null parameter names
-        if (-not $param.Name -or $param.Name.Trim() -eq "") {
-            continue
-        }
+    # Check if this policy has any configuration parameters (excluding system parameters)
+    $configParams = $Parameters | Where-Object { $_.Name -and $_.Name.Trim() -ne "" -and $_.Name -notmatch "^(IncludeArcMachines|effect|assignmentType)$" }
+    
+    if ($configParams.Count -eq 0) {
+        # Handle policies with no configuration parameters by creating hardcoded resources
+        Write-Host "  Policy has no configuration parameters - creating hardcoded configuration" -ForegroundColor Yellow
         
-        # Skip system parameters that are handled separately
-        if ($param.Name -match "^(IncludeArcMachines|effect|assignmentType)$") {
-            continue
+        if ($PolicyName -like "*Security Options - System objects*") {
+            # Add hardcoded System Objects configuration
+            if ($dscModules -notcontains "SecurityPolicyDsc") { $dscModules += "SecurityPolicyDsc" }
+            $dscResources += "        # Hardcoded System Objects configuration`r`n"
+            $dscResources += "        SecurityOption 'SystemObjectsRequireCaseInsensitivity'`r`n"
+            $dscResources += "        {`r`n"
+            $dscResources += "            Name = 'SystemObjectsRequireCaseInsensitivity'`r`n"
+            $dscResources += "            System_objects_Require_case_insensitivity_for_non_Windows_subsystems = 'Enabled'`r`n"
+            $dscResources += "        }`r`n`r`n"
+            $dscResources += "        SecurityOption 'SystemObjectsStrengthenDefaultPermissions'`r`n"
+            $dscResources += "        {`r`n"
+            $dscResources += "            Name = 'SystemObjectsStrengthenDefaultPermissions'`r`n"
+            $dscResources += "            System_objects_Strengthen_default_permissions_of_internal_system_objects_eg_Symbolic_Links = 'Enabled'`r`n"
+            $dscResources += "        }`r`n`r`n"
+        } else {
+            # Add a comment for other policies with no parameters
+            $dscResources += "        # No configuration parameters found for this policy`r`n"
+            $dscResources += "        # This policy may use a hardcoded guest configuration`r`n"
         }
+    } else {
+        # Process configuration parameters normally
+        foreach ($param in $configParams) {
         
         if ($PolicyName -like "*System Audit Policies*") {
             # Use AuditPolicyDsc module for audit policies
@@ -548,6 +567,36 @@ function New-DSCConfiguration {
                         $dscResources += "                'Disabled' { 'Disabled' }`r`n"
                         $dscResources += "                'Enabled' { 'Enabled' }`r`n"
                     }
+                    'Microsoft_network_client_Send_unencrypted_password_to_third_party_SMB_servers' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Microsoft_network_server_Disconnect_clients_when_logon_hours_expire' {
+                        $dscResources += "                '0' { 'Disabled' }`r`n"
+                        $dscResources += "                '1' { 'Enabled' }`r`n"
+                        $dscResources += "                'Disabled' { 'Disabled' }`r`n"
+                        $dscResources += "                'Enabled' { 'Enabled' }`r`n"
+                    }
+                    'Network_security_Configure_encryption_types_allowed_for_Kerberos' {
+                        $dscResources += "                '2147483644' { @('AES128_HMAC_SHA1', 'AES256_HMAC_SHA1') }`r`n"
+                        $dscResources += "                '2147483640' { @('AES128_HMAC_SHA1', 'AES256_HMAC_SHA1') }`r`n"
+                        $dscResources += "                '24' { @('AES128_HMAC_SHA1', 'AES256_HMAC_SHA1') }`r`n"
+                        $dscResources += "                default { @('AES128_HMAC_SHA1', 'AES256_HMAC_SHA1') }`r`n"
+                    }
+                    'Network_security_Minimum_session_security_for_NTLM_SSP_based_including_secure_RPC_clients' {
+                        $dscResources += "                '537395200' { 'Both options checked' }`r`n"
+                        $dscResources += "                '536870912' { 'Require NTLMv2 session security' }`r`n"
+                        $dscResources += "                '524288' { 'Require 128-bit encryption' }`r`n"
+                        $dscResources += "                default { 'Both options checked' }`r`n"
+                    }
+                    'Network_security_Minimum_session_security_for_NTLM_SSP_based_including_secure_RPC_servers' {
+                        $dscResources += "                '537395200' { 'Both options checked' }`r`n"
+                        $dscResources += "                '536870912' { 'Require NTLMv2 session security' }`r`n"
+                        $dscResources += "                '524288' { 'Require 128-bit encryption' }`r`n"
+                        $dscResources += "                default { 'Both options checked' }`r`n"
+                    }
                     'System_objects_Require_case_insensitivity_for_non_Windows_subsystems' {
                         $dscResources += "                '0' { 'Disabled' }`r`n"
                         $dscResources += "                '1' { 'Enabled' }`r`n"
@@ -699,6 +748,7 @@ function New-DSCConfiguration {
             $dscResources += "            ValueType = '$valueType'`r`n"
             $dscResources += "            Ensure = 'Present'`r`n"
             $dscResources += "        }`r`n`r`n"
+        }
         }
     }
     
